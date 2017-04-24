@@ -97,7 +97,7 @@ bool Particle::Modify(int x, int y, int size, TypeMoviment type)
 
 		//Inicialitzed with random the timelife of the particle
 		timelife = rand() % 12;
-		speed.y = -10;
+		speed.y = -1;
 		//Set SDL_Rect
 		switch (rand() % 4)
 		{
@@ -355,7 +355,8 @@ bool ParticleManager::PostUpdate()
 	{
 		Group[1].render(Group[1].pos, Group[1].speed);
 	}*/
-
+	j1PerfTimer time;
+	time.Start();
 	Group[0].render(fPoint(App->scene->player->position.x, App->scene->player->position.y), Group[0].speed);
 	Group[2].render(fPoint(App->scene->player->position.x, App->scene->player->position.y - 14), Group[2].speed);
 	Group[3].render(fPoint(App->scene->player->position.x + 8, App->scene->player->position.y - 8), Group[3].speed);
@@ -409,6 +410,8 @@ bool ParticleManager::PostUpdate()
 
 
 	Group[1].render(Group[1].pos, Group[1].speed);
+
+	LOG("TIMER %.5f", time.ReadMs());
 
 	return true;
 }
