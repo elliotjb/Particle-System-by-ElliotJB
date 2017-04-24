@@ -35,6 +35,38 @@ Particle::Particle(int x, int y, int size, TypeMoviment type, fPoint speed_parti
 
 		degrade.x = (rand() % 15 + 5);
 	}
+	else if (type == FIREWORK_RANDOM)
+	{
+		//with random change position
+		position.x = x - (rand() % 5) + (rand() % 5);
+		position.y = y;
+
+		degrade.y = 255;
+		degrade.x = 3;
+
+		speed = speed_particle;
+		speed.y -= (((float)rand() / (float)(RAND_MAX)) * 1);
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * 2) - (((float)rand() / (float)(RAND_MAX)) * 2);
+
+		//Set SDL_Rect
+		rect = { 0,0,size,size };
+	}
+	else if (type == FIREWORK)
+	{
+		//with random change position
+		position.x = x;
+		position.y = y;
+
+		degrade.y = 255;
+		degrade.x = 3;
+
+		speed = speed_particle;
+		speed.y -= (((float)rand() / (float)(RAND_MAX)) * 1);
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * 2) - (((float)rand() / (float)(RAND_MAX)) * 2);
+
+		//Set SDL_Rect
+		rect = { 0,0,size,size };
+	}
 	else
 	{
 		//with random change position
@@ -89,25 +121,27 @@ bool Particle::Modify(int x, int y, int size, TypeMoviment type)
 		degrade.y = 255;
 		degrade.x = (rand() % 15 + 5);
 	}
-	else if (type == FIREWORK)
+	else if (type == FIREWORK_RANDOM)
 	{
 		//with random change position
-		position.x = x - (rand() % 12) + (rand() % 10);
+		position.x = x;
 		position.y = y;
 
 		//Inicialitzed with random the timelife of the particle
-		timelife = rand() % 12;
-		speed.y = -1;
-		//Set SDL_Rect
-		switch (rand() % 4)
-		{
-		case 0: rect = { 0,0,size,size }; break;
-		case 1: rect = { size,0,size,size }; break;
-		case 2: rect = { size * 2,0,size,size }; break;
-		case 3: rect = { size * 3,0,size,size }; break;
-		}
+		timelife = rand() % 25;
 		degrade.y = 255;
-		degrade.x = 2;
+		degrade.x = 10;
+
+		speed.y = (((float)rand() / (float)(RAND_MAX)) * -2);
+		if (speed.x >= 0)
+		{
+			speed.x = (((float)rand() / (float)(RAND_MAX)) * -2);
+		}
+		if (speed.x < 0)
+		{
+			speed.x = (((float)rand() / (float)(RAND_MAX)) * 2);
+		}
+		rect = { size,0,size,size };
 	}
 	else
 	{
@@ -160,10 +194,11 @@ void Particle::Move(fPoint speed_set, TypeMoviment type)
 		position.x += speed_set.x;
 		position.y += speed_set.y;
 	}
-	else if (type == FIREWORK)
+	else if (type == FIREWORK_RANDOM)
 	{
 		speed.y += -speed_set.y;
 		position.y += speed.y;
+		position.x += speed.x;
 	}
 	else
 	{
@@ -174,6 +209,11 @@ void Particle::Move(fPoint speed_set, TypeMoviment type)
 		position.x += speed_set.x;
 	}
 
+}
+
+fPoint Particle::GetPosition()
+{
+	return position;
 }
 
 ParticleGroup::ParticleGroup(TypeMoviment type_, SDL_Texture* texture_, fPoint pos_, fPoint speed_, int size, int num_particles, bool active_)
@@ -188,15 +228,16 @@ ParticleGroup::ParticleGroup(TypeMoviment type_, SDL_Texture* texture_, fPoint p
 	size_rect = size;
 	//
 	number_particles = num_particles;
-
+	cont_active_firework = 0;
 	gravity = -9.8;
-
+	godelete = false;
 	active = active_;
 	for (int i = 0; i < num_particles; i++)//
 	{
 		Particle* temp = new Particle(pos.x, pos.y, size, type_, speed, active);
 		particle.push_back(temp);
 	}
+
 
 	//int temp = 0;
 }
@@ -229,7 +270,35 @@ void ParticleGroup::render(fPoint pos, fPoint speed)
 			particle[i]->render(texture);
 		}
 	}
-	if (type == FIRE_VERTICAL || type == FIRE_LATERAL || type == FIREWORK)
+	if (type == FIREWORK_RANDOM)
+	{
+		if (active)
+		{
+			//Check if the particle dead
+			for (int i = 0; i < number_particles; i++)
+			{
+				if (cont_active_firework >= number_particles)
+				{
+					if(particle[i]->isDead())
+					{
+						godelete = true;
+					}
+				}
+				else if (particle[i]->isDead() && cont_active_firework < number_particles)
+				{
+					cont_active_firework++;
+					particle[i]->Modify(particle[i]->GetPosition().x, particle[i]->GetPosition().y, size_rect, type);
+				}
+
+			}
+		}
+		//Draw particles
+		for (int i = 0; i < number_particles; i++)
+		{
+			particle[i]->render(texture);
+		}
+	}
+	if (type == FIRE_VERTICAL || type == FIRE_LATERAL)
 	{
 		if (active)
 		{
@@ -244,8 +313,6 @@ void ParticleGroup::render(fPoint pos, fPoint speed)
 				}
 			}
 		}
-
-
 		//Draw particles
 		for (int i = 0; i < number_particles; i++)
 		{
@@ -258,8 +325,24 @@ void ParticleGroup::MoveParticles()
 {
 	for (int i = 0; i < number_particles; i++)
 	{
-		particle[i]->Move(fPoint(speed.x * App->GetDT(), speed.y * App->GetDT()), type);
+		float temp = App->GetDT();
+		particle[i]->Move(fPoint(speed.x * temp, speed.y * temp), type);
 	}
+}
+
+bool ParticleManager::DeleteGroup(ParticleGroup* group)
+{
+	std::list<ParticleGroup*>::iterator item = Group.begin();
+	while (item != Group.end())
+	{
+		if (item._Ptr->_Myval == group)
+		{
+			Group.erase(item);
+		}
+	}
+
+
+	return true;
 }
 
 ParticleManager::ParticleManager()
@@ -281,21 +364,25 @@ bool ParticleManager::Start()
 	//texture
 	texture.push_back(App->tex->Load("Particles/pixel_grass_2.png"));
 	texture.push_back(App->tex->Load("Particles/pixel_fire_1.png"));
-	texture.push_back(App->tex->Load("Particles/pixel_test_1.png"));
+	texture.push_back(App->tex->Load("Particles/pixel_firework_1.png"));
 
 	//Add a metod particleGroup with type == Follow
-	Group.push_back(ParticleGroup(FOLLOW, texture[0], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0,0), App->tex->GetHeight(texture[0]), 90));
+	Group.push_back(new ParticleGroup(FOLLOW, texture[0], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0,0), App->tex->GetHeight(texture[0]), 90));
+
 	//lamp
-	Group.push_back(ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(327, 246), fPoint(0, -60), App->tex->GetHeight(texture[1]), 80));
+	Group.push_back(new ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(327, 246), fPoint(0, -60), App->tex->GetHeight(texture[1]), 80));
 
-	Group.push_back(ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0, -100), App->tex->GetHeight(texture[1]), 80));
-	Group.push_back(ParticleGroup(FIRE_LATERAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), fPoint(100, -30), App->tex->GetHeight(texture[1]), 65));
-	Group.push_back(ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0, 100), App->tex->GetHeight(texture[1]), 80));
-	Group.push_back(ParticleGroup(FIRE_LATERAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), fPoint(-100, -30), App->tex->GetHeight(texture[1]), 65));
+	Group.push_back(new ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0, -100), App->tex->GetHeight(texture[1]), 80));
+	Group.push_back(new ParticleGroup(FIRE_LATERAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), fPoint(100, -30), App->tex->GetHeight(texture[1]), 65));
+	Group.push_back(new ParticleGroup(FIRE_VERTICAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0, 100), App->tex->GetHeight(texture[1]), 80));
+	Group.push_back(new ParticleGroup(FIRE_LATERAL, texture[1], fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), fPoint(-100, -30), App->tex->GetHeight(texture[1]), 65));
 
-	Group.push_back(ParticleGroup(FIREWORK, texture[1], fPoint(250, 200), fPoint(0, -2), App->tex->GetHeight(texture[1]), 20));
+	//Group.push_back(new ParticleGroup(FIREWORK_RANDOM, texture[2], fPoint(250, 250), fPoint(1, -3), App->tex->GetHeight(texture[2]), 20));
 
-	Group[1].active = true;
+	//Group.push_back(ParticleGroup(FIREWORK, texture[2], fPoint(180, 200), fPoint(-1, -3), App->tex->GetHeight(texture[2]), 1));
+
+	
+	Group.begin()._Ptr->_Next->_Myval->active = true;
 	return true;
 }
 
@@ -306,9 +393,15 @@ bool ParticleManager::PreUpdate()
 
 bool ParticleManager::Update(float dt)
 {
-	for (int i = 0; i < Group.size(); i++)
+	std::list<ParticleGroup*>::iterator item = Group.begin();
+	while(item != Group.end())
 	{
-		switch (Group[i].type)
+		if (item._Ptr->_Myval->godelete)
+		{
+			DeleteGroup(item._Ptr->_Myval);
+			continue;
+		}
+		switch (item._Ptr->_Myval->type)
 		{
 		case FOLLOW:
 		{
@@ -317,12 +410,12 @@ bool ParticleManager::Update(float dt)
 		}
 		case FIRE_VERTICAL:
 		{
-			Group[i].MoveParticles();
+			item._Ptr->_Myval->MoveParticles();
 			break;
 		}
 		case FIRE_LATERAL:
 		{
-			Group[i].MoveParticles();
+			item._Ptr->_Myval->MoveParticles();
 			break;
 		}
 		case EXPLISION:
@@ -330,12 +423,18 @@ bool ParticleManager::Update(float dt)
 			//Update------
 			break;
 		}
+		case FIREWORK_RANDOM:
+		{
+			item._Ptr->_Myval->MoveParticles();
+			break;
+		}
 		case FIREWORK:
 		{
-			Group[i].MoveParticles();
+			item._Ptr->_Myval->MoveParticles();
 			break;
 		}
 		}
+		item++;
 	}
 
 	return true;
@@ -357,59 +456,92 @@ bool ParticleManager::PostUpdate()
 	}*/
 	j1PerfTimer time;
 	time.Start();
-	Group[0].render(fPoint(App->scene->player->position.x, App->scene->player->position.y), Group[0].speed);
-	Group[2].render(fPoint(App->scene->player->position.x, App->scene->player->position.y - 14), Group[2].speed);
-	Group[3].render(fPoint(App->scene->player->position.x + 8, App->scene->player->position.y - 8), Group[3].speed);
-	Group[4].render(fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), Group[4].speed);
-	Group[5].render(fPoint(App->scene->player->position.x - 8, App->scene->player->position.y - 8), Group[5].speed);
+
+	/*std::list<ParticleGroup*>::iterator item = Group.begin()++;
+	while (item != Group.end())
+	{
+
+	}*/
+
+	Group.begin()._Ptr->_Myval->render(fPoint(App->scene->player->position.x, App->scene->player->position.y), Group.begin()++._Ptr->_Myval->speed);
+
+	Group.begin()._Ptr->_Next->_Myval->render(Group.begin()._Ptr->_Next->_Myval->pos, Group.begin()._Ptr->_Next->_Myval->speed);
+
+	std::list<ParticleGroup*>::iterator item = Group.begin();
+	item++;
+	item++;
+	while (item != Group.end())
+	{
+		item._Ptr->_Myval->render(fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), item._Ptr->_Myval->speed);
+		item++;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
 	{
 		App->audio->PlayFx(1);
-		Group[2].active = false;
-		Group[3].active = false;
-		Group[4].active = false;
-		Group[5].active = false;
+		std::list<ParticleGroup*>::iterator item = Group.begin();
+		item++;
+		item++;
+		while (item != Group.end())
+		{
+			item._Ptr->_Myval->active = false;
+			item++;
+		}
+		std::list<ParticleGroup*>::iterator item_2 = Group.begin();
+		item_2++;
+		item_2++;
 		if (App->scene->player->direction == UP)
 		{
-			Group[2].active = true;
+			item_2._Ptr->_Myval->active = true;
 		}
 		else if (App->scene->player->direction == RIGHT)
 		{
-			Group[3].active = true;
+			item_2._Ptr->_Next->_Myval->active = true;
 		}
 		else if (App->scene->player->direction == DOWN)
 		{
-			Group[4].active = true;
+			item_2._Ptr->_Next->_Next->_Myval->active = true;
 		}
 		else if (App->scene->player->direction == LEFT)
 		{
-			Group[5].active = true;
+			item_2._Ptr->_Next->_Next->_Next->_Myval->active = true;
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 	{
-		App->audio->StopFx(1);
-		Group[2].active = false;
-		Group[3].active = false;
-		Group[4].active = false;
-		Group[5].active = false;
+		std::list<ParticleGroup*>::iterator item = Group.begin();
+		item++;
+		item++;
+		while (item != Group.end())
+		{
+			item._Ptr->_Myval->active = false;
+			item++;
+		}
+	}
 
-	}
-	Group[6].active = true;
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
-		Group[6].active = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
-	{
-		Group[6].active = false;
+		Group.push_back(new ParticleGroup(FIREWORK_RANDOM, texture[2], fPoint(250, 250), fPoint(1, -3), App->tex->GetHeight(texture[2]), 20));
 	}
 
 	//FireWork
-	Group[6].render(fPoint(250, 200), Group[6].speed);
+	if (Group.size() > 6)
+	{
+		std::list<ParticleGroup*>::iterator item = Group.begin();
+		item++;
+		item++;
+		item++;
+		item++;
+		item++;
+		while(item != Group.end())
+		{
+			item._Ptr->_Myval->render(fPoint(250, 250), item._Ptr->_Myval->speed);
+			item++;
+		}
+	}
 
 
-	Group[1].render(Group[1].pos, Group[1].speed);
+
 
 	LOG("TIMER %.5f", time.ReadMs());
 

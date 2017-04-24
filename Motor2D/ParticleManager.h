@@ -15,7 +15,8 @@ enum TypeMoviment
 	EXPLISION_DOWN,		 /*  */
 	EXPLISION_RIGHT,	 /*  */
 	EXPLISION_LEFT,		 /*  */
-	FIREWORK			 /*  */
+	FIREWORK_RANDOM,	 /*  */
+	FIREWORK
 };
 
 
@@ -36,7 +37,8 @@ public:
 
 	//Move particles
 	void Move(fPoint speed, TypeMoviment type);
-
+	//GetPosition
+	fPoint GetPosition();
 	
 private: //private??
 	//Offsets
@@ -81,6 +83,10 @@ public:
 	fPoint speed;
 	float gravity;
 	bool active;
+
+	bool godelete;
+
+	int cont_active_firework;
 };
 
 
@@ -111,8 +117,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool DeleteGroup(ParticleGroup* group);
+
 public:
-	std::vector<ParticleGroup> Group;
+	std::list<ParticleGroup*> Group;
 private:
 
 	std::vector<SDL_Texture*> texture;

@@ -605,11 +605,11 @@ bool Player::Move()
 	int keysuse = GetnuminputUse();
 	if (keysuse > 0)
 	{
-		App->particlemanaher->Group[0].active = true;
+		App->particlemanaher->Group.begin()._Ptr->_Myval->active = true;
 	}
 	else
 	{
-		App->particlemanaher->Group[0].active = false;
+		App->particlemanaher->Group.begin()._Ptr->_Myval->active = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{
