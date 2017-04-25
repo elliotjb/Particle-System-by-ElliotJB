@@ -12,9 +12,9 @@ class Particle;
 class P_Explosion
 {
 public:
-	P_Explosion(SceneElement* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 10, 10 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
-	P_Explosion(iPoint* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 10, 10 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
-	P_Explosion(iPoint pos, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 10, 10 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
+	P_Explosion(SceneElement* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
+	P_Explosion(iPoint* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
+	P_Explosion(iPoint pos, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, int num_particles = 20, int size_particle = 2, int num_textures = 4);
 	~P_Explosion();
 
 	// Called each loop iteration

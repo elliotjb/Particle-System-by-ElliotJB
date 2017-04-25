@@ -87,7 +87,7 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 	time->Write(var.c_str());
 	var.clear();*/
 	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red);
-	pos_bole.x += 1;
+	//pos_bole.x += 1; 
 	bool ret = true;
 	//if you dead, you appear on the Link House
 	if (hp_hearts.y == 0)
