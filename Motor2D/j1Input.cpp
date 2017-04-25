@@ -49,7 +49,7 @@ bool j1Input::Start()
 {
 	SDL_StartTextInput();
 	//SDL_StopTextInput();
-
+	mouse_pos = { 0,0 };
 	/* Open the first available controller. */
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) 
 	{
@@ -169,6 +169,9 @@ bool j1Input::PreUpdate()
 			mouse_motion_y = event.motion.yrel / scale;
 			mouse_x = event.motion.x / scale;
 			mouse_y = event.motion.y / scale;
+			mouse_pos.x = event.motion.x / scale;
+			mouse_pos.y = event.motion.y / scale;
+			 
 			break;
 		}
 
@@ -238,4 +241,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::GetMousePosition(iPoint* temp)
+{
+	temp = &mouse_pos;
 }

@@ -11,9 +11,9 @@ class P_Fire
 {
 public:
 	//	P_Follow(iPoint* element, iPoint area, iPoint timelife, SDL_Texture* texture, int size_particle, int num_textures, int num_particles = 20, bool active_ = false);
-	P_Fire(SceneElement* element, SDL_Texture* texture, iPoint area, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, Wind dir = W_NON, int size_particle = 4, int num_textures = 4, int num_particles = 20, bool active_ = false);
-	P_Fire(iPoint* element, SDL_Texture* texture, iPoint area, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, Wind dir = W_NON, int size_particle = 4, int num_textures = 4, int num_particles = 20, bool active_ = false);
-	P_Fire(iPoint pos, SDL_Texture* texture, iPoint area, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, Wind dir = W_NON, int size_particle = 4, int num_textures = 4, int num_particles = 20, bool active_ = false);
+	P_Fire(SceneElement* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, int num_particles = 20, int size_particle = 2, int num_textures = 4, bool active_ = false, Wind dir = W_NON );
+	P_Fire(iPoint* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, int num_particles = 20, int size_particle = 2, int num_textures = 4, bool active_ = false, Wind dir = W_NON );
+	P_Fire(iPoint pos, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, bool speed_static = true, int num_particles = 20, int size_particle = 2, int num_textures = 4, bool active_ = false, Wind dir = W_NON );
 	~P_Fire();
 
 	// Called each loop iteration
@@ -41,10 +41,12 @@ public:
 	//wind
 	Wind dir_wind;
 	bool wind_speed;
+	iPoint timelife;
 
 	//position
 	fPoint pos;
 	int size_rect;
+	iPoint area;
 
 	//velocity
 	fPoint speed;

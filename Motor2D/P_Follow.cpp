@@ -1,8 +1,9 @@
 #include "P_Follow.h"
 #include "Particle.h"
 #include "j1Player.h"
+#include "j1Window.h"
 
-P_Follow::P_Follow(SceneElement* element, iPoint area, iPoint timelife, SDL_Texture* texture_, int size_particle, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int size_particle, int num_textures, int num_particles, bool active_)
 {
 	texture = texture_;
 	pos.x = element->position.x;
@@ -12,10 +13,12 @@ P_Follow::P_Follow(SceneElement* element, iPoint area, iPoint timelife, SDL_Text
 	object_follow = nullptr;
 	element_to_follow = element;
 	//
+	area = area_;
 	number_particles = num_particles;
 	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
+	timelife = timelife_;
 	for (int i = 0; i < num_particles; i++)//
 	{
 		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), false, size_particle, num_textures, active_);
@@ -23,7 +26,7 @@ P_Follow::P_Follow(SceneElement* element, iPoint area, iPoint timelife, SDL_Text
 	}
 }
 
-P_Follow::P_Follow(iPoint* element, iPoint area, iPoint timelife, SDL_Texture* texture_, int size_particle, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int size_particle, int num_textures, int num_particles, bool active_)
 {
 	texture = texture_;
 	pos.x = element->x;
@@ -32,10 +35,12 @@ P_Follow::P_Follow(iPoint* element, iPoint area, iPoint timelife, SDL_Texture* t
 	object_follow = element;
 	element_to_follow = nullptr;
 	//
+	area = area_;
 	number_particles = num_particles;
 	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
+	timelife = timelife_;
 	for (int i = 0; i < num_particles; i++)
 	{
 		Particle* temp = new Particle(pos, area, timelife, fPoint(0, 0), false, size_particle, num_textures, active_);
@@ -78,7 +83,7 @@ void P_Follow::render(fPoint pos)
 		{
 			if (particle[i]->isDead())
 			{
-				particle[i]->Modify(pos, iPoint(12, 2));
+				particle[i]->Modify(pos, area, timelife);
 			}
 		}
 	}
@@ -96,6 +101,6 @@ void P_Follow::MoveParticles()
 
 void P_Follow::Update_position(iPoint* element)
 {
-	pos.x = element->x;
-	pos.y = element->y;
+	pos.x = element->x - App->render->camera.x / App->win->GetScale();
+	pos.y = element->y - App->render->camera.x / App->win->GetScale();
 }

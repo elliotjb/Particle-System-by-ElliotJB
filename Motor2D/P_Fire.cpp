@@ -1,7 +1,8 @@
 #include "P_Fire.h"
 #include "Particle.h"
+#include "j1Window.h"
 
-P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area, iPoint timelife, fPoint speed_particle,bool speed_static, Wind dir, int size_particle, int num_textures, int num_particles, bool active_)
+P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, bool speed_static, int num_particles, int size_particle, int num_textures, bool active_, Wind dir)
 {
 	texture = texture_;
 	pos.x = element->position.x;
@@ -12,14 +13,19 @@ P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area, iPoint
 	}
 	else
 	{
-		//speed.y -= (((float)rand() / (float)(RAND_MAX)) * 10);
-		speed.x = (((float)rand() / (float)(RAND_MAX)) * 20) - (((float)rand() / (float)(RAND_MAX)) * 20);
+		speed.y = speed_particle.y;
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * 60) - (((float)rand() / (float)(RAND_MAX)) * 60);
 	}
-	wind_speed = speed_static;
+	if (dir != W_NON)
+		wind_speed = true;
+	else
+		wind_speed = false;
 
 	object_follow = nullptr;
 	element_to_follow = element;
 	//
+	area = area_;
+	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
 	cont_active_firework = 0;
@@ -27,12 +33,12 @@ P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area, iPoint
 	active = active_;
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, iPoint(12, 2), iPoint(15, 5), speed, speed_static, 2, 4, true);
+		Particle* temp = new Particle(pos, area, timelife, speed, speed_static, size_particle, num_textures, true);
 		particle.push_back(temp);
 	}
 }
 
-P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area, iPoint timelife, fPoint speed_particle, bool speed_static, Wind dir, int size_particle, int num_textures, int num_particles, bool active_)
+P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, bool speed_static, int num_particles, int size_particle, int num_textures, bool active_, Wind dir)
 {
 	texture = texture_;
 	pos.x = element->x;
@@ -43,13 +49,18 @@ P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area, iPoint timel
 	}
 	else
 	{
-		//speed.y -= (((float)rand() / (float)(RAND_MAX)) * 10);
-		speed.x = (((float)rand() / (float)(RAND_MAX)) * 20) - (((float)rand() / (float)(RAND_MAX)) * 20);
+		speed.y = speed_particle.y;
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * 60) - (((float)rand() / (float)(RAND_MAX)) * 60);
 	}
-	wind_speed = speed_static;
+	if (dir != W_NON)
+		wind_speed = true;
+	else
+		wind_speed = false;
 	object_follow = element;
 	element_to_follow = nullptr;
 	//
+	area = area_;
+	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
 	cont_active_firework = 0;
@@ -57,12 +68,12 @@ P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area, iPoint timel
 	active = active_;
 	for (int i = 0; i < num_particles; i++)
 	{
-		Particle* temp = new Particle(pos, iPoint(12, 2), iPoint(15, 5), speed, speed_static, 2, 4, true);
+		Particle* temp = new Particle(pos, area, timelife, speed, speed_static, size_particle, num_textures, true);
 		particle.push_back(temp);
 	}
 }
 
-P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area, iPoint timelife, fPoint speed_particle, bool speed_static, Wind dir, int size_particle, int num_textures, int num_particles, bool active_)
+P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, bool speed_static, int num_particles, int size_particle, int num_textures, bool active_, Wind dir)
 {
 	texture = texture_;
 	pos.x = position.x;
@@ -73,13 +84,18 @@ P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area, iPoint timel
 	}
 	else
 	{
-		//speed.y -= (((float)rand() / (float)(RAND_MAX)) * 10);
-		speed.x = (((float)rand() / (float)(RAND_MAX)) * 20) - (((float)rand() / (float)(RAND_MAX)) * 20);
+		speed.y = speed_particle.y;
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * 60) - (((float)rand() / (float)(RAND_MAX)) * 60);
 	}
-	wind_speed = speed_static;
+	if (dir != W_NON)
+		wind_speed = true;
+	else
+		wind_speed = false;
 	object_follow = nullptr;
 	element_to_follow = nullptr;
 	//
+	area = area_;
+	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
 	cont_active_firework = 0;
@@ -87,7 +103,7 @@ P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area, iPoint timel
 	active = active_;
 	for (int i = 0; i < num_particles; i++)
 	{
-		Particle* temp = new Particle(pos, iPoint(12, 2), iPoint(15, 5), speed, speed_static, 2, 4, true);
+		Particle* temp = new Particle(pos, area, timelife, speed, speed_static, size_particle, num_textures, true);
 		particle.push_back(temp);
 	}
 }
@@ -109,7 +125,7 @@ bool P_Fire::Update(float dt)
 	}
 	else
 	{
-		//Nothing
+
 	}
 
 	MoveParticles();
@@ -133,7 +149,7 @@ void P_Fire::render(fPoint pos)
 		{
 			if (particle[i]->isDead())
 			{
-				particle[i]->Modify(pos, iPoint(12, 2));
+				particle[i]->Modify(pos, area, timelife);
 			}
 		}
 	}
@@ -156,6 +172,8 @@ void P_Fire::MoveParticles()
 
 void P_Fire::Update_position(iPoint* element)
 {
-	pos.x = element->x;
-	pos.y = element->y;
+	pos.x = element->x - App->render->camera.x / App->win->GetScale();
+	int scale = App->win->GetScale();
+	int temp = App->render->camera.y / scale;
+	pos.y = element->y - temp;
 }

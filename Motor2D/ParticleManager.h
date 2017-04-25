@@ -5,20 +5,6 @@
 #include "j1Module.h"
 #include "j1Scene.h"
 
-enum TypeMoviment 
-{
-	FOLLOW,				 /* This the point follow the "Object" */
-	FIRE_VERTICAL,		 /*  */
-	FIRE_LATERAL,	   	 /*  */
-	EXPLISION,			 /*  */
-	EXPLISION_UP,		 /*  */
-	EXPLISION_DOWN,		 /*  */
-	EXPLISION_RIGHT,	 /*  */
-	EXPLISION_LEFT,		 /*  */
-	FIREWORK_RANDOM,	 /*  */
-	FIREWORK
-};
-
 enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
 
 class P_Follow;

@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "SDL\include\SDL_gamecontroller.h"
+#include "p2Point.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
@@ -70,12 +71,15 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
+	void GetMousePosition(iPoint* temp);
 	//const char* get_lastinput();
 
 	bool input_print = false;
 
 	std::string last_input;
 
+
+	iPoint		mouse_pos;
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard = nullptr;

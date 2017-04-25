@@ -373,7 +373,16 @@ bool ParticleManager::Start()
 	texture.push_back(App->tex->Load("Particles/pixel_firework_1.png"));
 
 	Group_Follow.push_back(new P_Follow(App->scene->player, texture[0]));
-	Group_Fire.push_back(new P_Fire(iPoint(327, 246), texture[1], fPoint(0, -60), true, W_NON, 90, true));
+	Group_Fire.push_back(new P_Fire(iPoint(327, 246), texture[1], iPoint(5,2), iPoint(15,5), fPoint(0, -60), true, 65, 2, 4, true));
+	//mouse
+	Group_Fire.push_back(new P_Fire(&App->input->mouse_pos, texture[1], iPoint(5, 2), iPoint(15, 5), fPoint(0, -60), true, 65, 2, 4, true));
+
+	Group_Fire.push_back(new P_Fire(iPoint(250, 250), texture[1], iPoint(5, 2), iPoint(20, 5), fPoint(0, -60), false, 65, 2, 4, true, W_LEFT));
+	//mouse v2
+	//Group_Follow.push_back(new P_Follow(&App->input->mouse_pos, texture[1], iPoint(2,2), iPoint(15,5), 2, 4, 40, true));
+
+
+
 
 	//Add a metod particleGroup with type == Follow
 	/*Group.push_back(new ParticleGroup(FOLLOW, texture[0], fPoint(App->scene->player->position.x, App->scene->player->position.y), fPoint(0,0), App->tex->GetHeight(texture[0]), 90));
@@ -415,69 +424,11 @@ bool ParticleManager::Update(float dt)
 		item_2++;
 	}
 
-
-	/*std::list<ParticleGroup*>::iterator item = Group.begin();
-	while(item != Group.end())
-	{
-		if (item._Ptr->_Myval->godelete)
-		{
-			DeleteGroup(item._Ptr->_Myval);
-			item++;
-			continue;
-		}
-		switch (item._Ptr->_Myval->type)
-		{
-		case FOLLOW:
-		{
-			//Update------
-			break;
-		}
-		case FIRE_VERTICAL:
-		{
-			item._Ptr->_Myval->MoveParticles();
-			break;
-		}
-		case FIRE_LATERAL:
-		{
-			item._Ptr->_Myval->MoveParticles();
-			break;
-		}
-		case EXPLISION:
-		{
-			//Update------
-			break;
-		}
-		case FIREWORK_RANDOM:
-		{
-			item._Ptr->_Myval->MoveParticles();
-			break;
-		}
-		case FIREWORK:
-		{
-			item._Ptr->_Myval->MoveParticles();
-			break;
-		}
-		}
-		item++;
-	}*/
-
 	return true;
 }
 
 bool ParticleManager::PostUpdate()
 {
-	/*for (int i = 0; i < Group.size(); i++)
-	{
-		Group[i].render(App->scene->player->position, Group[i].speed);
-	}
-	if (Group[0].active == true)
-	{
-		Group[0].render(App->scene->player->position, Group[0].speed);
-	}
-	if (Group[1].active == true)
-	{
-		Group[1].render(Group[1].pos, Group[1].speed);
-	}*/
 	j1PerfTimer time;
 	time.Start();
 
@@ -496,84 +447,6 @@ bool ParticleManager::PostUpdate()
 		item_2++;
 	}
 
-	/*Group.begin()._Ptr->_Myval->render(fPoint(App->scene->player->position.x, App->scene->player->position.y), Group.begin()++._Ptr->_Myval->speed);
-
-	Group.begin()._Ptr->_Next->_Myval->render(Group.begin()._Ptr->_Next->_Myval->pos, Group.begin()._Ptr->_Next->_Myval->speed);
-
-	std::list<ParticleGroup*>::iterator item = Group.begin();
-	item++;
-	item++;
-	while (item != Group.end())
-	{
-		item._Ptr->_Myval->render(fPoint(App->scene->player->position.x, App->scene->player->position.y - 8), item._Ptr->_Myval->speed);
-		item++;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-	{
-		App->audio->PlayFx(1);
-		std::list<ParticleGroup*>::iterator item = Group.begin();
-		item++;
-		item++;
-		while (item != Group.end())
-		{
-			item._Ptr->_Myval->active = false;
-			item++;
-		}
-		std::list<ParticleGroup*>::iterator item_2 = Group.begin();
-		item_2++;
-		item_2++;
-		if (App->scene->player->direction == UP)
-		{
-			item_2._Ptr->_Myval->active = true;
-		}
-		else if (App->scene->player->direction == RIGHT)
-		{
-			item_2._Ptr->_Next->_Myval->active = true;
-		}
-		else if (App->scene->player->direction == DOWN)
-		{
-			item_2._Ptr->_Next->_Next->_Myval->active = true;
-		}
-		else if (App->scene->player->direction == LEFT)
-		{
-			item_2._Ptr->_Next->_Next->_Next->_Myval->active = true;
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
-	{
-		std::list<ParticleGroup*>::iterator item = Group.begin();
-		item++;
-		item++;
-		while (item != Group.end())
-		{
-			item._Ptr->_Myval->active = false;
-			item++;
-		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		Group.push_back(new ParticleGroup(FIREWORK_RANDOM, texture[2], fPoint(250, 250), fPoint(1, -3), App->tex->GetHeight(texture[2]), 40));
-		Group.end()._Ptr->_Prev->_Myval->active = true;
-	}
-
-	//FireWork
-	if (Group.size() > 6)
-	{
-		std::list<ParticleGroup*>::iterator item = Group.begin();
-		item++;
-		item++;
-		item++;
-		item++;
-		item++;
-		while(item != Group.end())
-		{
-			item._Ptr->_Myval->render(fPoint(250, 250), item._Ptr->_Myval->speed);
-			item++;
-		}
-	}*/
-
 
 
 
@@ -589,14 +462,14 @@ bool ParticleManager::CleanUp()
 
 bool ParticleManager::CreateFollowParticle(SceneElement* element_to_follow, SDL_Texture* texture, iPoint* object, int num_particles, bool active_)
 {
-	if (element_to_follow != nullptr)
+	/*if (element_to_follow != nullptr)
 	{
-		Group_Follow.push_back(new P_Follow(element_to_follow, texture, num_particles, active_));
+		Group_Follow.push_back(new P_Follow(element_to_follow, texture,  num_particles, active_));
 	}
 	else
 	{
 		Group_Follow.push_back(new P_Follow(object, texture, num_particles, active_));
-	}
+	}*/
 
 	return true;
 }
