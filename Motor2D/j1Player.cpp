@@ -19,6 +19,7 @@
 #include "j1Weapon.h"
 #include "Animation.h"
 #include "ParticleManager.h"
+#include "P_Follow.h"
 
 //Constructor
 Player::Player() : Creature()
@@ -61,7 +62,8 @@ bool Player::Start()
 	offset_x = 7;
 	offset_y = 10;
 	//--------------------------
-
+	test_bole = App->tex->Load("Particles/test_bole.png");
+	pos_bole = position;
 	/*timetoplay.Start();*/
 	canSwitchMap = true;
 	collision_feet = App->collision->AddCollider({ position.x - offset_x, position.y - offset_y, 14, 14 }, COLLIDER_PLAYER, this);
@@ -84,7 +86,8 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
 	time->Write(var.c_str());
 	var.clear();*/
-	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red)
+	BROFILER_CATEGORY("DoUpdate_Player", Profiler::Color::Red);
+	pos_bole.x += 1;
 	bool ret = true;
 	//if you dead, you appear on the Link House
 	if (hp_hearts.y == 0)
@@ -232,6 +235,7 @@ void Player::Draw()
 
 	//Draw player
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);  //TODO LOW-> ID magic number, need change!!
+	App->render->Blit(test_bole, pos_bole.x, pos_bole.y);
 }
 
 bool Player::CleanUp()
@@ -528,6 +532,15 @@ bool Player::Camera_inside(iPoint pos) //TODO JORDI -> RENDER
 //STATE MACHINE ---------------------------------------------------------------------
 bool Player::Idle()
 {
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		pos_bole = position;
+		App->particlemanaher->CreateFollowParticle(nullptr, App->particlemanaher->texture[1], &pos_bole, 20, true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		pos_bole = position;
+	}
 	//TEST MOVE LINK
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT ||
 		App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MDOWN) == EVENTSTATE::E_REPEAT ||
@@ -605,11 +618,11 @@ bool Player::Move()
 	int keysuse = GetnuminputUse();
 	if (keysuse > 0)
 	{
-		App->particlemanaher->Group.begin()._Ptr->_Myval->active = true;
+		App->particlemanaher->Group_Follow.begin()._Ptr->_Myval->active = true;
 	}
 	else
 	{
-		App->particlemanaher->Group.begin()._Ptr->_Myval->active = false;
+		App->particlemanaher->Group_Follow.begin()._Ptr->_Myval->active = false;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input_manager->EventPressed(INPUTEVENT::MLEFT) == EVENTSTATE::E_REPEAT)
 	{

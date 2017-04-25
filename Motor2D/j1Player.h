@@ -98,6 +98,9 @@ public:
 	BombContainer* bombmanager = nullptr;
 	Weapon* equiped_item = nullptr;
 
+	//TEST BOLE
+	SDL_Texture* test_bole = nullptr;
+	iPoint pos_bole;
 
 	bool camera_follow = false;
 

@@ -19,8 +19,12 @@ enum TypeMoviment
 	FIREWORK
 };
 
+enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
 
-class Particle
+class P_Follow;
+class P_Fire;
+
+/*class Particle
 {
 public:
 	//Initialize position and animation
@@ -55,9 +59,11 @@ private: //private??
 
 	//int
 	iPoint degrade;
-};
+};*/
 
-class ParticleGroup
+
+
+/*class ParticleGroup
 {
 public:
 	//Contructor valors predefinition Num_particules = 20 // active = false
@@ -87,7 +93,7 @@ public:
 	bool godelete;
 
 	int cont_active_firework;
-};
+};*/
 
 
 class ParticleManager : public j1Module
@@ -109,21 +115,28 @@ public:
 	bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update(float dt);
+	virtual bool Update(float dt);
 
 	// Called before all Updates
-	bool PostUpdate();
+	virtual bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
-	bool DeleteGroup(ParticleGroup* group);
+	//create Group
+	//void CreateFIRE(TypeMoviment type, SceneElement* element_to_follow);
+	//void CreateFIREWORK(TypeMoviment type, SceneElement* element_to_follow);
+	bool CreateFollowParticle(SceneElement* element_to_follow, SDL_Texture* texture, iPoint* pos_object = nullptr, int num_particles = 20, bool active_ = false);
+	//bool DeleteGroup(ParticleGroup* group);
 
 public:
-	std::list<ParticleGroup*> Group;
+	//std::list<ParticleGroup*> Group;
+	std::list<P_Follow*> Group_Follow;
+	std::list<P_Fire*> Group_Fire;
+	std::vector<SDL_Texture*> texture;
 private:
 
-	std::vector<SDL_Texture*> texture;
+
 
 
 

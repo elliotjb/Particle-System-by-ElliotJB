@@ -39,8 +39,8 @@ bool j1Scene::Start()
 {
 	Load_new_map(2);
 	gamestate = INGAME;
-	App->audio->PlayMusic("audio/FIRE.ogg");
-	App->audio->VolumeMusic(100);
+	//App->audio->PlayMusic("audio/FIRE.ogg");
+	//App->audio->VolumeMusic(100);
 	App->audio->LoadFx("audio/flamethrower.wav");
 
 	inventory = false;

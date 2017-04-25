@@ -85,6 +85,15 @@
     <ClCompile Include="ParticleManager.cpp">
       <Filter>Zelda Game\_Particle System</Filter>
     </ClCompile>
+    <ClCompile Include="P_Follow.cpp">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="P_Fire.cpp">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -184,6 +193,15 @@
       <Filter>Zelda Game\ElementsScene</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Follow.h">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Fire.h">
       <Filter>Zelda Game\_Particle System</Filter>
     </ClInclude>
   </ItemGroup>
