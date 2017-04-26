@@ -87,6 +87,7 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="P_Explosion.cpp" />
     <ClCompile Include="P_Fire.cpp" />
+    <ClCompile Include="P_Firework.cpp" />
     <ClCompile Include="P_Follow.cpp" />
     <ClCompile Include="SceneElements.cpp" />
     <ClCompile Include="Soldier.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="P_Explosion.h" />
     <ClInclude Include="P_Fire.h" />
+    <ClInclude Include="P_Firework.h" />
     <ClInclude Include="P_Follow.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="j1AnimationManager.h" />

@@ -97,6 +97,9 @@
     <ClCompile Include="P_Explosion.cpp">
       <Filter>Zelda Game\_Particle System</Filter>
     </ClCompile>
+    <ClCompile Include="P_Firework.cpp">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -208,6 +211,9 @@
       <Filter>Zelda Game\_Particle System</Filter>
     </ClInclude>
     <ClInclude Include="P_Explosion.h">
+      <Filter>Zelda Game\_Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="P_Firework.h">
       <Filter>Zelda Game\_Particle System</Filter>
     </ClInclude>
   </ItemGroup>
