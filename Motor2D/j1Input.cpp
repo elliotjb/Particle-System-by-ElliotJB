@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
+#include "j1Render.h"
 #include "j1Window.h"
 #include "j1InputManager.h"
 #include "SDL/include/SDL.h"
@@ -246,4 +247,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 void j1Input::GetMousePosition(iPoint* temp)
 {
 	temp = &mouse_pos;
+}
+
+iPoint j1Input::GetMousePosition()
+{
+	return iPoint(mouse_x - App->render->camera.x / 2, mouse_y - App->render->camera.y / 2);
 }

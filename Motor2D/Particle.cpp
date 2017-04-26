@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_particle, bool speed_static, int size, int num_tex_pixel, bool active)
+Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_particle, P_Direction p_direction, int size, int num_tex_pixel, bool active, Wind dir)
 {
 	//with random change position
 	if (area.x == 0)
@@ -18,17 +18,42 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 
 	//TimeLife of Particle
 	if (active)
-		degrade.y = 255;
+		degrade.y = MAX_TIMELIFE;
 	else
 		degrade.y = 0;
+
 	degrade.x = (rand() % timelife.x + timelife.y);
 
 	//Set Speed
 	speed = speed_particle;
-	if (speed_static == false)
+	if (p_direction == P_UP)
 	{
-		speed.y -= (((float)rand() / (float)(RAND_MAX)) * 10);
-		speed.x = (((float)rand() / (float)(RAND_MAX)) * 20) - (((float)rand() / (float)(RAND_MAX)) * 20);
+		speed.y = - (((float)rand() / (float)(RAND_MAX)) * speed.y);
+	}
+	else if (p_direction == P_DOWN)
+	{
+		speed.y = (((float)rand() / (float)(RAND_MAX)) * speed.y);
+	}
+	else if (p_direction == P_LEFT)
+	{
+		speed.x =  - (((float)rand() / (float)(RAND_MAX)) * speed.x);
+	}
+	else if (p_direction == P_RIGHT)
+	{
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * speed.x);
+	}
+	else if (p_direction == P_RANDOM_X)
+	{
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * speed.x) - (((float)rand() / (float)(RAND_MAX)) * speed.x);
+	}
+	else if (p_direction == P_RANDOM_Y)
+	{
+		speed.y = (((float)rand() / (float)(RAND_MAX)) * speed.y) - (((float)rand() / (float)(RAND_MAX)) * speed.y);
+	}
+	else if (p_direction == P_RANDOM)
+	{
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * speed.x) - (((float)rand() / (float)(RAND_MAX)) * speed.x);
+		speed.y = (((float)rand() / (float)(RAND_MAX)) * speed.y) - (((float)rand() / (float)(RAND_MAX)) * speed.y);
 	}
 
 	//Set SDL_Rect
@@ -60,7 +85,7 @@ bool Particle::Modify(fPoint respawn, iPoint area, iPoint timelife, iPoint num_t
 		position.y = respawn.y - (rand() % area.y) + (rand() % area.y);
 
 	//TimeLife of Particle
-	degrade.y = 255;
+	degrade.y = MAX_TIMELIFE;
 	degrade.x = (rand() % timelife.x + timelife.y);
 
 	//Set SDL_Rect
@@ -143,4 +168,15 @@ void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
 fPoint Particle::GetPosition()
 {
 	return position;
+}
+
+fPoint Particle::GetSpeed()
+{
+	return speed;
+}
+
+void Particle::SetSpeedGreavity(fPoint speed_modify)
+{
+	speed.x += speed_modify.x;
+	speed.y += speed_modify.y;
 }

@@ -3,7 +3,7 @@
 #include "j1Player.h"
 #include "j1Window.h"
 
-P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int size_particle, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
 {
 	texture = texture_;
 	pos.x = element->position.x;
@@ -19,14 +19,16 @@ P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, i
 	godelete = false;
 	active = active_;
 	timelife = timelife_;
+	n_textures = num_textures;
+	size_rect = App->tex->GetHeight(texture_);
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), false, size_particle, num_textures, active_);
+		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), P_NON, size_rect, num_textures, active_);
 		particle.push_back(temp);
 	}
 }
 
-P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int size_particle, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
 {
 	texture = texture_;
 	pos.x = element->x;
@@ -41,9 +43,11 @@ P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint 
 	godelete = false;
 	active = active_;
 	timelife = timelife_;
+	size_rect = App->tex->GetHeight(texture_);
+	n_textures = num_textures;
 	for (int i = 0; i < num_particles; i++)
 	{
-		Particle* temp = new Particle(pos, area, timelife, fPoint(0, 0), false, size_particle, num_textures, active_);
+		Particle* temp = new Particle(pos, area, timelife, fPoint(0, 0), P_NON, size_rect, num_textures, active_);
 		particle.push_back(temp);
 	}
 }
@@ -83,7 +87,7 @@ void P_Follow::render(fPoint pos)
 		{
 			if (particle[i]->isDead())
 			{
-				particle[i]->Modify(pos, area, timelife);
+				particle[i]->Modify(pos, area, timelife, iPoint(0, n_textures));
 			}
 		}
 	}
