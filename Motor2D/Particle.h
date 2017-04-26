@@ -4,6 +4,8 @@
 
 #include "ParticleManager.h"
 
+#define TIME_WIND 160
+
 class Particle
 {
 public:

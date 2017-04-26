@@ -74,7 +74,7 @@ bool ParticleManager::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
-		Group_Firework.push_back(new P_Firework(iPoint(200, 300), texture[2], iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
+		Group_Firework.push_back(new P_Firework(App->input->GetMousePosition(), texture[2], iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
 	}
 
 

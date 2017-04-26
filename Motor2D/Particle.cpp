@@ -165,7 +165,7 @@ void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
 		if (dir == W_UP)
 		{
 			position.x += speed.x;
-			if (degrade.y < 160)
+			if (degrade.y < TIME_WIND)
 			{
 				position.y += speed.y;
 			}
@@ -173,7 +173,7 @@ void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
 		else if (dir == W_DOWN)
 		{
 			position.x += speed.x;
-			if (degrade.y < 160)
+			if (degrade.y < TIME_WIND)
 			{
 				position.y -= speed.y;
 			}
@@ -181,7 +181,7 @@ void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
 		else if (dir == W_RIGHT)
 		{
 			position.y += speed.y;
-			if (degrade.y < 160)
+			if (degrade.y < TIME_WIND)
 			{
 				position.x += speed.x;
 			}
@@ -189,7 +189,7 @@ void Particle::Move(fPoint speed, Wind dir, bool Move_alternative)
 		else //dir == W_LEFT
 		{
 			position.y += speed.y;
-			if (degrade.y < 160)
+			if (degrade.y < TIME_WIND)
 			{
 				position.x -= speed.x;
 			}
