@@ -15,7 +15,6 @@ P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, i
 	//
 	area = area_;
 	number_particles = num_particles;
-	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
 	timelife = timelife_;
@@ -39,7 +38,6 @@ P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint 
 	//
 	area = area_;
 	number_particles = num_particles;
-	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
 	timelife = timelife_;

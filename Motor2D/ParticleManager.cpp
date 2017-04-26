@@ -7,6 +7,7 @@
 #include "P_Follow.h"
 #include "P_Fire.h"
 #include "P_Explosion.h"
+#include "P_Firework.h"
 
 ParticleManager::ParticleManager()
 {
@@ -34,13 +35,11 @@ bool ParticleManager::Start()
 	Group_Follow.push_back(new P_Follow(App->scene->player, texture[0]));
 	Group_Fire.push_back(new P_Fire(iPoint(327, 246), texture[1], iPoint(5,2), iPoint(15,5), fPoint(0, -60), P_NON, 65, 4, true));
 	//mouse
-	//Group_Fire.push_back(new P_Fire(&App->input->mouse_pos, texture[1], iPoint(20, 10), iPoint(10, 3), fPoint(0, -60), P_NON, 5000, 2, 4, true));
+	//Group_Fire.push_back(new P_Fire(&App->input->mouse_pos, texture[1], iPoint(20, 10), iPoint(10, 3), fPoint(60, -60), P_RANDOM, 5000, 4, true));
 
 	Group_Fire.push_back(new P_Fire(iPoint(250, 250), texture[1], iPoint(5, 2), iPoint(20, 5), fPoint(45, -60), P_NON, 65, 4, true, W_LEFT));
 	//mouse v2
 	//Group_Follow.push_back(new P_Follow(&App->input->mouse_pos, texture[1], iPoint(2,2), iPoint(15,5), 2, 4, 40, true));
-
-	
 
 
 	//Add a metod particleGroup with type == Follow
@@ -73,6 +72,11 @@ bool ParticleManager::Update(float dt)
 	{
 		Group_Explosion.push_back(new P_Explosion(iPoint(250, 200), texture[1], CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
 	}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		Group_Firework.push_back(new P_Firework(iPoint(200, 300), texture[2], iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
+	}
+
 
 	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 	{
@@ -111,7 +115,6 @@ bool ParticleManager::Update(float dt)
 		{
 			item_3._Ptr->_Myval->particle.clear();
 			Group_Explosion.erase(item_3);
-			LOG("DELETE EXPLOSION!------------------");
 		}
 		else
 		{
@@ -119,6 +122,22 @@ bool ParticleManager::Update(float dt)
 		}
 		item_3++;
 	}
+
+	std::list<P_Firework*>::iterator item_4 = Group_Firework.begin();
+	while (item_4 != Group_Firework.end())
+	{
+		if (item_4._Ptr->_Myval->godelete)
+		{
+			item_4._Ptr->_Myval->particle.clear();
+			Group_Firework.erase(item_4);
+		}
+		else
+		{
+			item_4._Ptr->_Myval->Update(dt);
+		}
+		item_4++;
+	}
+	
 
 
 	return true;
@@ -149,6 +168,13 @@ bool ParticleManager::PostUpdate()
 	{
 		item_3._Ptr->_Myval->PostUpdate();
 		item_3++;
+	}
+
+	std::list<P_Firework*>::iterator item_4 = Group_Firework.begin();
+	while (item_4 != Group_Firework.end())
+	{
+		item_4._Ptr->_Myval->PostUpdate();
+		item_4++;
 	}
 
 

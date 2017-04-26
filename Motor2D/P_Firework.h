@@ -5,15 +5,17 @@
 #include "ParticleManager.h"
 #include "SceneElements.h"
 
+#define MULITFIREWORK 4
+
 class Particle;
 
 class P_Firework
 {
 public:
 	//	P_Follow(iPoint* element, iPoint area, iPoint timelife, SDL_Texture* texture, int size_particle, int num_textures, int num_particles = 20, bool active_ = false);
-	P_Firework(SceneElement* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, bool active_ = false, Wind dir = W_NON);
-	P_Firework(iPoint* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, bool active_ = false, Wind dir = W_NON);
-	P_Firework(iPoint pos, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, bool active_ = false, Wind dir = W_NON);
+	P_Firework(SceneElement* element, SDL_Texture* texture, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
+	P_Firework(iPoint* element, SDL_Texture* texture, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
+	P_Firework(iPoint pos, SDL_Texture* texture, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
 	~P_Firework();
 
 	// Called each loop iteration
@@ -32,28 +34,28 @@ public:
 	SceneElement* element_to_follow;
 	//Num of particles
 	int number_particles;
+	int number_multifirework;
 
 	//test
 	iPoint* object_follow;
 
-	//wind
-	Wind dir_wind;
-	bool wind_speed;
+	//timelife
 	iPoint timelife;
+
+
+	//textures
+	iPoint next_textures;
+	iPoint last_textures;
 
 	//position
 	fPoint pos;
 	int size_rect;
 	int n_textures;
-	iPoint area;
 
 	//velocity
 	fPoint speed;
-	bool active;
 
 	bool godelete;
-
-	int cont_active_firework;
 
 };
 

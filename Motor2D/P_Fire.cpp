@@ -21,7 +21,6 @@ P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoin
 	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
 	n_textures = num_textures;
@@ -52,7 +51,6 @@ P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint time
 	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
 	n_textures = num_textures;
@@ -82,7 +80,6 @@ P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area_, iPoint time
 	timelife = timelife_;
 	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
 	godelete = false;
 	active = active_;
 	n_textures = num_textures;

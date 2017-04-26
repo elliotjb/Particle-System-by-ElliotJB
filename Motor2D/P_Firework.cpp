@@ -1,40 +1,35 @@
 #include "P_Firework.h"
 #include "Particle.h"
 
-P_Firework::P_Firework(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
+P_Firework::P_Firework(SceneElement* element, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
 {
 	texture = texture_;
 	pos.x = element->position.x;
 	pos.y = element->position.y;
 	speed = speed_particle;
 
-	if (dir != W_NON)
-		wind_speed = true;
-	else
-		wind_speed = false;
-
 	object_follow = nullptr;
 	element_to_follow = element;
+
+	next_textures = next_textture_;
+	last_textures = last_textures_;
 	//
-	area = area_;
 	timelife = timelife_;
-	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
+	number_multifirework = num_particles;
 	godelete = false;
-	active = active_;
 	n_textures = num_textures;
 	size_rect = App->tex->GetHeight(texture_);
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
+		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, n_textures, true);
 		particle.push_back(temp);
 	}
 
 
 }
 
-P_Firework::P_Firework(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
+P_Firework::P_Firework(iPoint* element, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
 {
 
 	texture = texture_;
@@ -42,57 +37,48 @@ P_Firework::P_Firework(iPoint* element, SDL_Texture* texture_, iPoint area_, iPo
 	pos.y = element->y;
 
 	speed = speed_particle;
-
-	if (dir != W_NON)
-		wind_speed = true;
-	else
-		wind_speed = false;
 	object_follow = element;
 	element_to_follow = nullptr;
+
+	next_textures = next_textture_;
+	last_textures = last_textures_;
 	//
-	area = area_;
 	timelife = timelife_;
-	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
+	number_multifirework = num_particles;
 	godelete = false;
-	active = active_;
 	n_textures = num_textures;
 	size_rect = App->tex->GetHeight(texture_);
 	for (int i = 0; i < num_particles; i++)
 	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
+		Particle* temp = new Particle(pos, iPoint(0,0), timelife, speed, p_direction, size_rect, n_textures, true);
 		particle.push_back(temp);
 	}
 
 }
 
-P_Firework::P_Firework(iPoint position, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
+P_Firework::P_Firework(iPoint position, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
 {
 	texture = texture_;
 	pos.x = position.x;
 	pos.y = position.y;
 	speed = speed_particle;
 
-	if (dir != W_NON)
-		wind_speed = true;
-	else
-		wind_speed = false;
 	object_follow = nullptr;
 	element_to_follow = nullptr;
+
+	next_textures = next_textture_;
+	last_textures = last_textures_;
 	//
-	area = area_;
 	timelife = timelife_;
-	dir_wind = dir;
 	number_particles = num_particles;
-	cont_active_firework = 0;
+	number_multifirework = num_particles;
 	godelete = false;
-	active = active_;
 	n_textures = num_textures;
 	size_rect = App->tex->GetHeight(texture_);
-	for (int i = 0; i < num_particles; i++)
+	for (int i = 0; i < 1; i++)
 	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
+		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, n_textures, true);
 		particle.push_back(temp);
 	}
 
@@ -117,36 +103,119 @@ bool P_Firework::Update(float dt)
 
 bool P_Firework::PostUpdate()
 {
-	render(pos);
+	if (particle.size() == 1)
+	{
+		render(particle[0]->GetPosition());
+	}
+	else
+	{
+		render(pos);
+	}
+
 	return true;
 }
 
 void P_Firework::render(fPoint pos)
 {
-	if (active)
+	if (particle.size() == 1)
 	{
-		//Check if the particle dead
-		for (int i = 0; i < number_particles; i++)
+		if (particle[0]->isDead())
 		{
-			if (particle[i]->isDead())
+			timelife.y += 1;
+			for (int i = 1; i < number_particles; i++)
 			{
-				particle[i]->Modify(pos, area, timelife, iPoint(0, n_textures));
+				speed.x = 100;
+				speed.y = 100;
+				Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, size_rect, n_textures, true, W_NON, next_textures);
+				particle.push_back(temp);
+			}
+			timelife.y -= 1;
+		}
+	}
+	else
+	{
+		for (int i = 1; i < number_particles; i++)
+		{
+			if (particle[i]->isDead() && particle[i]->GetRepeat())
+			{
+				particle[i]->SetRepeat(false);
+				for (int k = 0; k < MULITFIREWORK; k++)
+				{
+					speed.x = 100;
+					speed.y = 100;
+					Particle* temp = new Particle(particle[i]->GetPosition(), iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, size_rect, n_textures, true, W_NON, last_textures);
+					particle.push_back(temp);
+					number_multifirework++;
+				}
 			}
 		}
 	}
 
-	//Draw particles
-	for (int i = 0; i < number_particles; i++)
+	if (particle.size() == 1)
 	{
-		particle[i]->render(texture);
+		//Draw particles
+		for (int i = 0; i < 1; i++)
+		{
+			particle[i]->render(texture);
+		}
 	}
+	else if (particle.size() == number_particles)
+	{
+		//Draw particles
+		for (int i = 0; i < number_particles; i++)
+		{
+			particle[i]->render(texture);
+		}
+	}
+	else //	number_multifirework;
+	{
+		//Draw particles
+		for (int i = 0; i < number_multifirework; i++)
+		{
+			particle[i]->render(texture);
+		}
+	}
+
+
 }
 
 void P_Firework::MoveParticles()
 {
-	for (int i = 0; i < number_particles; i++)
+	if (particle.size() == 1)
 	{
-		float temp = App->GetDT();
-		particle[i]->Move(fPoint(particle[i]->GetSpeed().x * temp, particle[i]->GetSpeed().y * temp), dir_wind, wind_speed);
+		for (int i = 0; i < 1; i++)
+		{
+			particle[i]->SetSpeedGreavity(fPoint(0, 5));
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			float temp = App->GetDT();
+			particle[i]->Move(fPoint(particle[i]->GetSpeed().x * temp, particle[i]->GetSpeed().y * temp));
+		}
 	}
+	else if (particle.size() == number_particles)
+	{
+		for (int i = 1; i < number_particles; i++)
+		{
+			particle[i]->SetSpeedGreavity(fPoint(0, 5));
+		}
+		for (int i = 1; i < number_particles; i++)
+		{
+			float temp = App->GetDT();
+			particle[i]->Move(fPoint(particle[i]->GetSpeed().x * temp, particle[i]->GetSpeed().y * temp));
+		}
+	}
+	else
+	{
+		for (int i = number_particles; i < number_multifirework; i++)
+		{
+			particle[i]->SetSpeedGreavity(fPoint(0, 5));
+		}
+		for (int i = number_particles; i < number_multifirework; i++)
+		{
+			float temp = App->GetDT();
+			particle[i]->Move(fPoint(particle[i]->GetSpeed().x * temp, particle[i]->GetSpeed().y * temp));
+		}
+	}
+
 }

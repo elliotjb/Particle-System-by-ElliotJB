@@ -55,8 +55,6 @@ public:
 
 	bool godelete;
 
-	int cont_active_firework;
-
 };
 
 

@@ -6,86 +6,16 @@
 #include "j1Scene.h"
 
 #define MAX_TIMELIFE 255
+#define NORMAL_SPEED_Y 180
 
 enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
-enum P_Direction { P_NON, P_UP, P_DOWN, P_LEFT, P_RIGHT, P_RANDOM_X, P_RANDOM_Y, P_RANDOM };
+enum P_Direction { P_NON, P_UP, P_DOWN, P_LEFT, P_RIGHT, P_RANDOM_X, P_RANDOM_Y, P_RANDOM, P_RANDOM_FIREWORK };
 
 
 class P_Follow;
 class P_Fire;
 class P_Explosion;
-
-/*class Particle
-{
-public:
-	//Initialize position and animation
-	Particle(int x, int y, int size, TypeMoviment type, fPoint speed, bool active);
-
-	//Reactive this only when the particle is created
-	bool Modify(int x, int y, int size, TypeMoviment type);
-
-	//Checks if particle is dead
-	bool isDead();
-
-	//render particle
-	void render(SDL_Texture* texture);
-
-	//Move particles
-	void Move(fPoint speed, TypeMoviment type);
-	//GetPosition
-	fPoint GetPosition();
-	
-private: //private??
-	//Offsets
-	fPoint position;
-
-	//Current frame of animation
-	int timelife;
-
-	//Texture
-	SDL_Rect rect;
-
-	//velocity
-	fPoint speed;
-
-	//int
-	iPoint degrade;
-};*/
-
-
-
-/*class ParticleGroup
-{
-public:
-	//Contructor valors predefinition Num_particules = 20 // active = false
-	ParticleGroup(TypeMoviment type, SDL_Texture* texture, fPoint pos, fPoint speed, int size, int num_particles = 20, bool active_ = false);
-	~ParticleGroup();
-
-	void render(fPoint pos, fPoint speed);
-	void MoveParticles();
-
-public:
-	TypeMoviment type;
-	SDL_Texture* texture;
-	std::vector<Particle*> particle;
-	
-	//Num of particles
-	int number_particles;
-
-	//position
-	fPoint pos;
-	int size_rect;
-
-	//velocity
-	fPoint speed;
-	float gravity;
-	bool active;
-
-	bool godelete;
-
-	int cont_active_firework;
-};*/
-
+class P_Firework;
 
 class ParticleManager : public j1Module
 {
@@ -125,6 +55,7 @@ public:
 	std::list<P_Follow*> Group_Follow;
 	std::list<P_Fire*> Group_Fire;
 	std::list<P_Explosion*> Group_Explosion;
+	std::list<P_Firework*> Group_Firework;
 	std::vector<SDL_Texture*> texture;
 private:
 

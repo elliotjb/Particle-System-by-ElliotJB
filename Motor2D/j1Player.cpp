@@ -208,22 +208,6 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 		}
 	}
 
-
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		if (App->scene->inventory) //TODO LOW -> If pressed to fast you can listen fx twice.
-		{
-			App->audio->PlayFx(3);
-		}
-		else
-		{
-			App->audio->PlayFx(2);
-		}
-
-		App->scene->switch_menu = true;
-		App->scene->gamestate = INMENU;
-	}
-
 	//Collision follow the player
 	collision_feet->SetPos(position.x - offset_x, position.y - offset_y);
 

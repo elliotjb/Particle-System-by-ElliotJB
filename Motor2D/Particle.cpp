@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_particle, P_Direction p_direction, int size, int num_tex_pixel, bool active, Wind dir)
+Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_particle, P_Direction p_direction, int size, int num_tex_pixel, bool active, Wind dir, iPoint num_tex)
 {
 	//with random change position
 	if (area.x == 0)
@@ -22,7 +22,15 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 	else
 		degrade.y = 0;
 
-	degrade.x = (rand() % timelife.x + timelife.y);
+	if (timelife.x == 0)
+	{
+		degrade.x = timelife.y;
+	}
+	else
+	{
+		degrade.x = (rand() % timelife.x + timelife.y);
+	}
+
 
 	//Set Speed
 	speed = speed_particle;
@@ -55,19 +63,44 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 		speed.x = (((float)rand() / (float)(RAND_MAX)) * speed.x) - (((float)rand() / (float)(RAND_MAX)) * speed.x);
 		speed.y = (((float)rand() / (float)(RAND_MAX)) * speed.y) - (((float)rand() / (float)(RAND_MAX)) * speed.y);
 	}
-
-	//Set SDL_Rect
-	switch (rand() % num_tex_pixel)
+	else if(p_direction == P_RANDOM_FIREWORK)
 	{
-	case 0: rect = { 0,0,size,size }; break;
-	case 1: rect = { size,0,size,size }; break;
-	case 2: rect = { size * 2,0,size,size }; break;
-	case 3: rect = { size * 3,0,size,size }; break;
-	case 4: rect = { size * 4,0,size,size }; break;
-	case 5: rect = { size * 5,0,size,size }; break;
-	case 6: rect = { size * 6,0,size,size }; break;
-	case 7: rect = { size * 7,0,size,size }; break;
+		speed.x = (((float)rand() / (float)(RAND_MAX)) * speed.x) - (((float)rand() / (float)(RAND_MAX)) * speed.x);
+		speed.y = - ((((float)rand() / (float)(RAND_MAX)) * speed.y) + NORMAL_SPEED_Y);
 	}
+
+	not_repeat = true;
+	if (num_tex.x != 0 && num_tex.y != 0)
+	{
+		//Set SDL_Rect
+		switch (rand() % num_tex.y + num_tex.x)
+		{
+		case 0: rect = { 0,0,size,size }; break;
+		case 1: rect = { size,0,size,size }; break;
+		case 2: rect = { size * 2,0,size,size }; break;
+		case 3: rect = { size * 3,0,size,size }; break;
+		case 4: rect = { size * 4,0,size,size }; break;
+		case 5: rect = { size * 5,0,size,size }; break;
+		case 6: rect = { size * 6,0,size,size }; break;
+		case 7: rect = { size * 7,0,size,size }; break;
+		}
+	}
+	else
+	{
+		//Set SDL_Rect
+		switch (rand() % num_tex_pixel)
+		{
+		case 0: rect = { 0,0,size,size }; break;
+		case 1: rect = { size,0,size,size }; break;
+		case 2: rect = { size * 2,0,size,size }; break;
+		case 3: rect = { size * 3,0,size,size }; break;
+		case 4: rect = { size * 4,0,size,size }; break;
+		case 5: rect = { size * 5,0,size,size }; break;
+		case 6: rect = { size * 6,0,size,size }; break;
+		case 7: rect = { size * 7,0,size,size }; break;
+		}
+	}
+
 	size_rect = size;
 }
 
@@ -179,4 +212,14 @@ void Particle::SetSpeedGreavity(fPoint speed_modify)
 {
 	speed.x += speed_modify.x;
 	speed.y += speed_modify.y;
+}
+
+void Particle::SetRepeat(bool temp)
+{
+	not_repeat = temp;
+}
+
+bool Particle::GetRepeat()
+{
+	return not_repeat;
 }
