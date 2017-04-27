@@ -100,6 +100,14 @@ To create a Particle System, it is necessary to set a series of attributes that 
 <https://media.giphy.com/media/HJVsC0wynlEo8/giphy.gif>
 
 
+## CODE
+
+ ![](https://raw.githubusercontent.com/elliotjb/Particle-System-by-ElliotJB/master/docs/Code_3_2.PNG) 
+ ![](https://raw.githubusercontent.com/elliotjb/Particle-System-by-ElliotJB/master/docs/exp.png) 
+
+
+
+
 ## TODOS
 We will create some particles that follow the player "Link" and the mouse, to do this follow the next TODOs:
 
