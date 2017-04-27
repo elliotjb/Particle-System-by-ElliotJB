@@ -101,13 +101,14 @@ To create a Particle System, it is necessary to set a series of attributes that 
 
  
 ## Code
-Now let's do a little exercise to see how it works my Particle System.
+I 
 
 
-## TODOS
-In the "TODO" we will complete the method of Follow
 
-### TODO 1
+
+
+
+
 
 
 
