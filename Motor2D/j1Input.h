@@ -73,6 +73,7 @@ public:
 	void GetMouseMotion(int& x, int& y);
 	void GetMousePosition(iPoint* temp);
 	iPoint GetMousePosition();
+	iPoint* GetMousePosition_p();
 	//const char* get_lastinput();
 
 	bool input_print = false;

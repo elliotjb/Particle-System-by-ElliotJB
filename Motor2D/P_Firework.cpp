@@ -36,7 +36,7 @@ P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_st
 	godelete = false;
 	n_textures = num_textures;
 	size_rect = initial_rect.w;
-	for (int i = 0; i < num_particles; i++)//
+	for (int i = 0; i < 1; i++)//
 	{
 		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, n_textures, true);
 		particle.push_back(temp);

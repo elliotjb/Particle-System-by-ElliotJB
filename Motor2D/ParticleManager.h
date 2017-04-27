@@ -10,13 +10,20 @@
 
 enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
 enum P_Direction { P_NON, P_UP, P_DOWN, P_LEFT, P_RIGHT, P_RANDOM_X, P_RANDOM_Y, P_RANDOM, P_RANDOM_FIREWORK };
+enum Explosion_Type
+{
+	CIRCLE,				/**/
+	CROSS,				/**/
+	RANDOM				/**/
+};
 
 class P_Follow;
 class P_Fire;
 class P_Explosion;
 class P_Firework;
 
-enum Explosion_Type;
+
+
 
 class ParticleManager : public j1Module
 {
@@ -72,9 +79,7 @@ public:
 	std::list<P_Firework*> Group_Firework;
 
 	SDL_Texture* atlas_particle = nullptr;
-private:
-	//TEST BOLE	
-	SDL_Texture* test_age = nullptr;
+
 
 
 

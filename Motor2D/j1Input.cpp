@@ -248,3 +248,8 @@ iPoint j1Input::GetMousePosition()
 {
 	return iPoint(mouse_x - App->render->camera.x / 2, mouse_y - App->render->camera.y / 2);
 }
+
+iPoint* j1Input::GetMousePosition_p()
+{
+	return &mouse_pos;
+}

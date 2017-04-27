@@ -219,7 +219,7 @@ void Player::Draw()
 
 	//Draw player
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK); 
-	App->render->Blit(test_bole, pos_bole.x, pos_bole.y);
+	//App->render->Blit(test_bole, pos_bole.x, pos_bole.y);
 
 
 }
@@ -521,7 +521,7 @@ bool Player::Idle()
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 	{
 		pos_bole = position;
-		App->particlemanaher->CreateFollowParticle(nullptr, App->particlemanaher->texture[1], &pos_bole, 20, true);
+		//App->particlemanaher->CreateFollow_P(nullptr, nullptr App->particlemanaher->texture, &pos_bole, 20, true);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 	{

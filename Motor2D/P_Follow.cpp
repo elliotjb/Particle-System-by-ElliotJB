@@ -7,8 +7,8 @@ P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Rect initial_rect,
 {
 	//TODO 3:---------------------------------------------------------------------------------------
 	//Check if entity (element) is different from nullptr
-	//Then set the position of the entity and the pointer iPoint (object) to nullptr
-	if (element_to_follow != nullptr)
+	//Then set the position of the entity and the pointer iPoint (object) to nullptr and entity pointer has created in .h
+	if (element != nullptr)
 	{
 		pos.x = element->position.x;
 		pos.y = element->position.y;
@@ -35,7 +35,9 @@ P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Rect initial_rect,
 	for (int i = 0; i < num_particles; i++)//
 	{
 		//TODO 4: ------------------------------------------------------------------------------
-		//
+		//In this TODO we need open Particle.h and see the constructor
+		//Create a new Particle and pushback in vector.
+		//TIPS: Speed = fPoint(0,0) // P_Direction = P_NON
 		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), P_NON, initial_rect, size_rect, num_textures, active_);
 		particle.push_back(temp);
 		//-------------------------------------------------------------------------------
@@ -49,7 +51,8 @@ P_Follow::~P_Follow()
 bool P_Follow::Update(float dt)
 {
 	//TODO 5:-------------------------------------------------------------
-	//
+	//Here we have to Update the position.
+	//Check if the entity is diferent nullptr. On the contrary, use Update_position(iPoint* pos);
 	if (element_to_follow != nullptr)
 	{
 		pos.x = element_to_follow->position.x;
@@ -75,6 +78,8 @@ void P_Follow::render(fPoint pos)
 	if (active)
 	{
 		//TODO 6: ---------------------------------------------------------------------------
+		//Iterate the filled vector, First Comprovated if the particle is Dead, and then use particle[i]->Modify();
+		//TIPS: Use number_particles!! // iPoint num_tex -> (0, n_textures)!
 		for (int i = 0; i < number_particles; i++)
 		{
 			if (particle[i]->isDead())
@@ -87,6 +92,7 @@ void P_Follow::render(fPoint pos)
 
 	//TODO 7: -------------------------------------------------------------------
 	//Draw particles
+	//Iterate the filled vector, Call the functioon render();
 	for (int i = 0; i < number_particles; i++)
 	{
 		particle[i]->render();
@@ -103,9 +109,9 @@ void P_Follow::Update_position(iPoint* element)
 	}
 	else
 	{
-		pos.x = element->x - App->render->camera.x / App->win->GetScale();
-		pos.y = element->y - App->render->camera.x / App->win->GetScale();
+		pos.x = element->x - App->render->camera.x / 2;
+		pos.y = element->y - App->render->camera.y / 2;
 	}
 
-
+	LOG("%i - %i", element->x, element->y);
 }

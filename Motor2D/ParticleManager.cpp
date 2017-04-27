@@ -24,21 +24,16 @@ bool ParticleManager::Awake()
 
 bool ParticleManager::Start()
 {
-	test_age = App->tex->Load("Particles/test_age_1.png");
-
 	//texture
-	atlas_particle = App->tex->Load("Particles/pixel_fire_1.png"); //1
+	atlas_particle = App->tex->Load("Particles/atlas_particle.png"); //1
 
+	//Link Follow
+	Group_Follow.push_back(new P_Follow(App->scene->player, nullptr, SDL_Rect{ 0,6,2,0 }, iPoint(5, 2), iPoint(15, 5), 4, 20, true, true));
 
-	Group_Follow.push_back(new P_Follow(App->scene->player, nullptr));
-	//Group_Fire.push_back(new P_Fire(iPoint(327, 246), texture[1], iPoint(5,2), iPoint(15,5), fPoint(0, -60), P_NON, 65, 4, true));
-	//mouse
-	//Group_Fire.push_back(new P_Fire(&App->input->mouse_pos, texture[1], iPoint(20, 10), iPoint(10, 3), fPoint(60, -60), P_RANDOM, 5000, 4, true));
-
-	//Group_Fire.push_back(new P_Fire(iPoint(250, 250), texture[1], iPoint(5, 2), iPoint(20, 5), fPoint(45, -60), P_NON, 65, 4, true, W_LEFT));
-	//mouse v2
-	//Group_Follow.push_back(new P_Follow(&App->input->mouse_pos, texture[1], iPoint(2,2), iPoint(15,5), 2, 4, 40, true));
-
+	//TODO 8: ----------------------------------------------------------------------------------
+	//Uncomment
+	Group_Follow.push_back(new P_Follow(nullptr, App->input->GetMousePosition_p(), SDL_Rect{ 0,2,2,0 }, iPoint(0, 0), iPoint(15, 5), 4, 20, true, true));
+	// ---------------------------------------------------------------------------------------
 
 	return true;
 }
@@ -50,31 +45,29 @@ bool ParticleManager::PreUpdate()
 
 bool ParticleManager::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	//SET FIRE
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, iPoint(250, 200), SDL_Rect{ 0,0,8,4 }, CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,2,2,0 }, iPoint(5, 2), iPoint(12, 4), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
 	}
+	//FIREWORK
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
-		Group_Firework.push_back(new P_Firework(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
+		Group_Firework.push_back(new P_Firework(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,8,2,0 }, iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
 	}
 
-
+	//EXPLOSIONS
 	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 	{
-		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
-		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(12, 12), iPoint(20, 10), fPoint(100, -60), P_LEFT, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 10));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,4,2,0 }, CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
 	}
 	if (App->input->GetMouseButtonDown(2) == KEY_DOWN)
 	{
-		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(60, -60), P_RANDOM_X, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 20));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,4,2,0 }, CIRCLE, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_RANDOM, 22));
 	}
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
 	{
-		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(200, -60), P_RANDOM_X, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 30));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,4,2,0 }, RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(200, -60), P_RANDOM_X, 21));
 	}
 
 	std::list<P_Follow*>::iterator item = Group_Follow.begin();
@@ -119,33 +112,11 @@ bool ParticleManager::Update(float dt)
 		}
 		item_4++;
 	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(305, 162), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(314, 174), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(374, 136), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(361, 226), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(266, 276), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(386, 319), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(468, 207), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-	}
-
-	
-
-
 	return true;
 }
 
 bool ParticleManager::PostUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_REPEAT)
-	{
-		App->render->Blit(test_age, 100, 50);
-
-	}
-
 	//Iterate all list
 	//Group FOLLOW -------------------------------------------------
 	std::list<P_Follow*>::iterator item = Group_Follow.begin();
