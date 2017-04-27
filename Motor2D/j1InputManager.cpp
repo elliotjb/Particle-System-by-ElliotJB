@@ -41,7 +41,6 @@ bool InputManager::PreUpdate()
 
 bool InputManager::Update(float dt)
 {
-	//TODO 7 uncomment this after doned
 	/*if (EventPressed(PAUSE) == E_DOWN)
 	{
 		ChangeInputEvent(MUP);

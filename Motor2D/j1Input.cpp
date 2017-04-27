@@ -189,7 +189,6 @@ bool j1Input::PreUpdate()
 
 		case SDL_CONTROLLERDEVICEADDED:
 
-			//TODO 2 SPECIAL CASE: check if this is a gamecontroller -> event.cdevice.which ;)
 			if (SDL_IsGameController(event.cdevice.which))
 			{
 				controller = SDL_GameControllerOpen(event.cdevice.which);
@@ -197,7 +196,6 @@ bool j1Input::PreUpdate()
 			break;
 
 		case SDL_CONTROLLERDEVICEREMOVED:
-			//TODO 2 SPECIAL CASE "close" the pointer be polite ;)
 			if (controller)
 			{
 				SDL_GameControllerClose(controller);
@@ -213,15 +211,12 @@ bool j1Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
 
-	//TODO 2 "close" the pointer be polite ;)
 	/* Attempt to open every controller. */
 	if (controller)
 	{
-		//TODO MID
 		//SDL_GameControllerClose(controller);
 	}
 
-	//TODO 1 Close it be polite
 	SDL_QuitSubSystem(SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER);
 	return true;
 }

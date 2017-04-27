@@ -60,9 +60,10 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 	}
 	else if (p_direction == P_RANDOM_Y)
 	{
-		//TODO 2 -------------------------------------------
-
+		//TODO 1 -------------------------------------------
+		//Same as above, but on the y axis
 		speed.y = (((float)rand() / (float)(RAND_MAX)) * speed.y) - (((float)rand() / (float)(RAND_MAX)) * speed.y);
+		//-----------------------------------------------------------------------
 	}
 	else if (p_direction == P_RANDOM)
 	{

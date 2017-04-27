@@ -80,7 +80,7 @@ bool Player::PreUpdate()
 	return ret;
 }
 
-bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need.
+bool Player::Update(float dt)
 {
 	/*sprintf_s(buffer, 30, "%.f seconds of playtime", game_timer.ReadSec());
 	std::string var = std::to_string(game_timer.ReadSec()) + "seconds of playtime";
@@ -182,7 +182,7 @@ bool Player::Update(float dt)//TODO HIGH -> I delete dt but i thing that we need
 		}
 	}
 
-	/*else if (gamestate == TIMETOPLAY) //TODO JORDI - ELLIOT
+	/*else if (gamestate == TIMETOPLAY)
 	{
 
 		if (timetoplay.ReadSec() > 1 || dialog == nullptr)
@@ -218,7 +218,7 @@ void Player::Draw()
 {
 
 	//Draw player
-	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);  //TODO LOW-> ID magic number, need change!!
+	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK); 
 	App->render->Blit(test_bole, pos_bole.x, pos_bole.y);
 
 
@@ -282,7 +282,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 					position.x = c2->callback->position.x + c2->rect.w*0.5;
 					position.y = c2->callback->position.y + c2->rect.h;
 					DynamicObjects* temp = (DynamicObjects*)c2->callback;
-					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position)); //TODO LOW call Drop item() function
+					App->scene->items.push_back(App->entity_elements->CreateItem(temp->item_id, position));
 					score += 75;
 					App->entity_elements->DeleteDynObject((DynamicObjects*)c2->callback);
 				}
@@ -340,7 +340,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 			if (c1 == collision_feet && c2->type == COLLIDER_SWITCH_MAP)
 			{
-				if (canSwitchMap == false) // TODO LOW -> delete canSwitchMap
+				if (canSwitchMap == false)
 				{
 					canSwitchMap = true;
 				}
@@ -372,7 +372,7 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
-bool Player::Camera_inside() //TODO JORDI -> RENDER
+bool Player::Camera_inside() 
 {
 	//256x224
 	if (camera_follow == true)
@@ -444,7 +444,7 @@ bool Player::Camera_inside() //TODO JORDI -> RENDER
 	return true;
 }
 
-bool Player::Camera_inside(iPoint pos) //TODO JORDI -> RENDER
+bool Player::Camera_inside(iPoint pos) 
 {
 	//256x224
 	if (camera_follow == true)
@@ -973,7 +973,7 @@ bool Player::Unequip()
 	return ret;
 }
 
-//HOOKSHOT  TODO JORDI ----------------------------------
+//HOOKSHOT
 void Player::KeepGoing()
 {
 	if (hook != nullptr)

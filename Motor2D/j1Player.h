@@ -112,7 +112,7 @@ public:
 
 private:
 
-	//player stats TODO JORDI - ELLIOT
+	//player stats
 	iPoint hp_hearts;//.X shows MAX HEARTS and .Y ACTUAL LIFE (1 heart on hud == 2 hp_hearts)
 	int actual_floor = 0;
 
