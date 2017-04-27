@@ -3,15 +3,27 @@
 #include "j1Player.h"
 #include "j1Window.h"
 
-P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
 {
 	texture = texture_;
-	pos.x = element->position.x;
-	pos.y = element->position.y;
+	if (element_to_follow != nullptr)
+	{
+		pos.x = element->position.x;
+		pos.y = element->position.y;
+		element_to_follow = element;
+		object_follow = nullptr;
+	}
+	else
+	{
+		pos.x = object->x;
+		pos.y = object->y;
+		object_follow = object;
+		element_to_follow = nullptr;
+	}
+
 	//speed = speed_;
 
-	object_follow = nullptr;
-	element_to_follow = element;
+
 	//
 	area = area_;
 	number_particles = num_particles;
@@ -23,29 +35,6 @@ P_Follow::P_Follow(SceneElement* element, SDL_Texture* texture_, iPoint area_, i
 	for (int i = 0; i < num_particles; i++)//
 	{
 		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), P_NON, size_rect, num_textures, active_);
-		particle.push_back(temp);
-	}
-}
-
-P_Follow::P_Follow(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
-{
-	texture = texture_;
-	pos.x = element->x;
-	pos.y = element->y;
-	//speed = speed_;
-	object_follow = element;
-	element_to_follow = nullptr;
-	//
-	area = area_;
-	number_particles = num_particles;
-	godelete = false;
-	active = active_;
-	timelife = timelife_;
-	size_rect = App->tex->GetHeight(texture_);
-	n_textures = num_textures;
-	for (int i = 0; i < num_particles; i++)
-	{
-		Particle* temp = new Particle(pos, area, timelife, fPoint(0, 0), P_NON, size_rect, num_textures, active_);
 		particle.push_back(temp);
 	}
 }

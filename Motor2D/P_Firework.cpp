@@ -1,15 +1,32 @@
 #include "P_Firework.h"
 #include "Particle.h"
 
-P_Firework::P_Firework(SceneElement* element, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
+P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_static, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
 {
 	texture = texture_;
-	pos.x = element->position.x;
-	pos.y = element->position.y;
-	speed = speed_particle;
+	if (element != nullptr)
+	{
+		pos.x = element->position.x;
+		pos.y = element->position.y;
+		element_to_follow = element;
+		object = nullptr;
+	}
+	else if (object != nullptr)
+	{
+		pos.x = object->x;
+		pos.y = object->y;
+		object_follow = object;
+		element_to_follow = nullptr;
+	}
+	else
+	{
+		pos.x = position_static.x;
+		pos.y = position_static.y;
+		object_follow = nullptr;
+		element_to_follow = nullptr;
+	}
 
-	object_follow = nullptr;
-	element_to_follow = element;
+	speed = speed_particle;
 
 	next_textures = next_textture_;
 	last_textures = last_textures_;
@@ -21,62 +38,6 @@ P_Firework::P_Firework(SceneElement* element, SDL_Texture* texture_, iPoint time
 	n_textures = num_textures;
 	size_rect = App->tex->GetHeight(texture_);
 	for (int i = 0; i < num_particles; i++)//
-	{
-		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, n_textures, true);
-		particle.push_back(temp);
-	}
-
-
-}
-
-P_Firework::P_Firework(iPoint* element, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
-{
-
-	texture = texture_;
-	pos.x = element->x;
-	pos.y = element->y;
-
-	speed = speed_particle;
-	object_follow = element;
-	element_to_follow = nullptr;
-
-	next_textures = next_textture_;
-	last_textures = last_textures_;
-	//
-	timelife = timelife_;
-	number_particles = num_particles;
-	number_multifirework = num_particles;
-	godelete = false;
-	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
-	for (int i = 0; i < num_particles; i++)
-	{
-		Particle* temp = new Particle(pos, iPoint(0,0), timelife, speed, p_direction, size_rect, n_textures, true);
-		particle.push_back(temp);
-	}
-
-}
-
-P_Firework::P_Firework(iPoint position, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
-{
-	texture = texture_;
-	pos.x = position.x;
-	pos.y = position.y;
-	speed = speed_particle;
-
-	object_follow = nullptr;
-	element_to_follow = nullptr;
-
-	next_textures = next_textture_;
-	last_textures = last_textures_;
-	//
-	timelife = timelife_;
-	number_particles = num_particles;
-	number_multifirework = num_particles;
-	godelete = false;
-	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
-	for (int i = 0; i < 1; i++)
 	{
 		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, n_textures, true);
 		particle.push_back(temp);

@@ -2,11 +2,31 @@
 #include "Particle.h"
 #include "j1Window.h"
 
-P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
+P_Fire::P_Fire(SceneElement* element, iPoint* object, iPoint position_static, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
 {
 	texture = texture_;
-	pos.x = element->position.x;
-	pos.y = element->position.y;
+	if (element != nullptr)
+	{
+		pos.x = element->position.x;
+		pos.y = element->position.y;
+		element_to_follow = element;
+		object = nullptr;
+	}
+	else if (object != nullptr)
+	{
+		pos.x = object->x;
+		pos.y = object->y;
+		object_follow = object;
+		element_to_follow = nullptr;
+	}
+	else
+	{
+		pos.x = position_static.x;
+		pos.y = position_static.y;
+		object_follow = nullptr;
+		element_to_follow = nullptr;
+	}
+
 	speed = speed_particle;
 
 	if (dir != W_NON)
@@ -14,8 +34,7 @@ P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoin
 	else
 		wind_speed = false;
 
-	object_follow = nullptr;
-	element_to_follow = element;
+
 	//
 	area = area_;
 	timelife = timelife_;
@@ -26,65 +45,6 @@ P_Fire::P_Fire(SceneElement* element, SDL_Texture* texture_, iPoint area_, iPoin
 	n_textures = num_textures;
 	size_rect = App->tex->GetHeight(texture_);
 	for (int i = 0; i < num_particles; i++)//
-	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
-		particle.push_back(temp);
-	}
-}
-
-P_Fire::P_Fire(iPoint* element, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
-{
-	texture = texture_;
-	pos.x = element->x;
-	pos.y = element->y;
-
-	speed = speed_particle;
-
-	if (dir != W_NON)
-		wind_speed = true;
-	else
-		wind_speed = false;
-	object_follow = element;
-	element_to_follow = nullptr;
-	//
-	area = area_;
-	timelife = timelife_;
-	dir_wind = dir;
-	number_particles = num_particles;
-	godelete = false;
-	active = active_;
-	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
-	for (int i = 0; i < num_particles; i++)
-	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
-		particle.push_back(temp);
-	}
-}
-
-P_Fire::P_Fire(iPoint position, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
-{
-	texture = texture_;
-	pos.x = position.x;
-	pos.y = position.y;
-	speed = speed_particle;
-
-	if (dir != W_NON)
-		wind_speed = true;
-	else
-		wind_speed = false;
-	object_follow = nullptr;
-	element_to_follow = nullptr;
-	//
-	area = area_;
-	timelife = timelife_;
-	dir_wind = dir;
-	number_particles = num_particles;
-	godelete = false;
-	active = active_;
-	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
-	for (int i = 0; i < num_particles; i++)
 	{
 		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
 		particle.push_back(temp);

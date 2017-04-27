@@ -17,9 +17,7 @@ class Particle;
 class P_Explosion
 {
 public:
-	P_Explosion(SceneElement* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4);
-	P_Explosion(iPoint* element, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4);
-	P_Explosion(iPoint pos, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4);
+	P_Explosion(SceneElement* element, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, Explosion_Type type, iPoint perimeter = { 20, 20 }, iPoint timelife = { 20,10 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4);
 	~P_Explosion();
 
 	// Called each loop iteration
@@ -29,8 +27,6 @@ public:
 	bool PostUpdate();
 
 	void render(fPoint pos);
-
-	void Update_position(iPoint* pos);
 
 	void MoveParticles();
 

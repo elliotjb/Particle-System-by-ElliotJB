@@ -220,6 +220,8 @@ void Player::Draw()
 	//Draw player
 	App->anim_manager->Drawing_Manager(anim_state, direction, position, LINK);  //TODO LOW-> ID magic number, need change!!
 	App->render->Blit(test_bole, pos_bole.x, pos_bole.y);
+
+
 }
 
 bool Player::CleanUp()

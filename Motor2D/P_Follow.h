@@ -10,8 +10,7 @@ class Particle;
 class P_Follow
 {
 public:
-	P_Follow(SceneElement* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int num_textures = 4, int num_particles = 20, bool active_ = false);
-	P_Follow(iPoint* element, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int num_textures = 4, int num_particles = 20, bool active_ = false);
+	P_Follow(SceneElement* element_to_follow, iPoint* object_follow, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int num_textures = 4, int num_particles = 20, bool active_ = false);
 	~P_Follow();
 
 	// Called each loop iteration
