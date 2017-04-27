@@ -99,13 +99,125 @@ To create a Particle System, it is necessary to set a series of attributes that 
 
 <https://media.giphy.com/media/HJVsC0wynlEo8/giphy.gif>
 
+
+## TODOS
+We will create some particles that follow the player "Link" and the mouse, to do this follow the next TODOs:
+
+### TODO 1
+Set degrade.y -> time of life
+First we need to know if the particle is active. 
+If it is, we set the maximum life it can have (#define), and if it is not, we put it to death " = 0".
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/Particle.cpp#L18>
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/Particle.cpp#L63>
+
+**When you finish run the program and try to put explosions and fireworks.**
+
+
+
+
+
+
+### TODO 2
+Create a Particle Vector, use std::vector
+Also, create a pointer to an entity (SceneElement*)
+And finally a pointer to an iPoint (iPoint*)
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.h#L28>
+
+
+
+
+
+
+### TODO 3
+Check if entity (element) is different from nullptr
+Then set the position of the entity and the pointer iPoint (object) to nullptr and entity pointer has created in .h
+//---------------------------
+Otherwise, do it backwards. //element == nullptr and position = object
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L8>
+
+
+
+
+
+
+### TODO 4
+In this TODO we need open Particle.h and see the constructor
+Create a new Particle and pushback in vector.
+TIPS: Speed = fPoint(0,0) // P_Direction = P_NON
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L37>
+
+
+
+
+
+
+### TODO 5
+Here we have to Update the position.
+Check if the entity is diferent nullptr and set position. On the contrary, use Update_position(iPoint* pos);
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L53>
+
+
+
+
+
+
+### TODO 6
+Iterate the filled vector, First Comprovated if the particle is Dead, and then use particle[i]->Modify();
+TIPS: Use number_particles!! // iPoint num_tex -> (0, n_textures)!
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L80>
  
-## Code
-I 
+ 
+ 
+ 
+ 
+ 
+### TODO 7
+Draw particles
+Iterate the filled vector, Call the functioon render();
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L93>
 
 
 
 
+
+
+### TODO 8 
+Uncomment
+
+- Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/ParticleManager.cpp#L33>
+
+
+
+
+## Content
+In this project you can see 4 diferents methods of Particle system:
+ - Follow
+ - Fire
+ - Explosion
+ - Firework
+
+
+## Controls
+
+- With Arrows you can move "Link"
+- "F"-> Put a fire in mouse position.
+- "SPACE" -> Firework in mouse position.
+- Cick-Left -> Explision CROSS.
+- Cick-Center -> Explision CIRCLE.
+- Cick-Right -> Explision RANDOM.
+
+
+## Author
+Name: Elliot Jimenez Bosch
+Email: elliot.jimenez1@gmail.com
+GitHub: <https://github.com/elliotjb>
 
 
 
