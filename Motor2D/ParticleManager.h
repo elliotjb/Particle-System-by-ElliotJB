@@ -9,13 +9,16 @@
 #define NORMAL_SPEED_Y 180
 
 enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
+
 enum P_Direction { P_NON, P_UP, P_DOWN, P_LEFT, P_RIGHT, P_RANDOM_X, P_RANDOM_Y, P_RANDOM, P_RANDOM_FIREWORK };
+
 enum Explosion_Type
 {
 	CIRCLE,				/**/
 	CROSS,				/**/
 	RANDOM				/**/
 };
+
 
 class P_Follow;
 class P_Fire;
