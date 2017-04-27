@@ -97,7 +97,7 @@ To create a Particle System, it is necessary to set a series of attributes that 
 ## Age Of Empires 2
 - Example:
 
- ![](https://media.giphy.com/media/HJVsC0wynlEo8/giphy.gif) 
+<https://media.giphy.com/media/HJVsC0wynlEo8/giphy.gif>
 
  
 ## Code
