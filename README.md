@@ -29,6 +29,7 @@ To create a Particle System, it is necessary to set a series of attributes that 
 #### Position:
  - It is the position from where you are respawn, you can play with this value and establish an area from the center of the point and make it exit from a random place.
  - Example:
+ 
  ![](https://media.giphy.com/media/fmTp0H3B7ElR6/giphy.gif)
  
  
@@ -36,10 +37,12 @@ To create a Particle System, it is necessary to set a series of attributes that 
 #### Speed:
  - The speed at which it will come out, here you can apply a force, for example: gravity or wind. This can increase realism.
  - Example Speed:
+ 
   ![](https://media.giphy.com/media/muKgnCvN7srmg/giphy.gif)
 
 
  - Example Gravity:
+ 
   ![](https://media.giphy.com/media/eb9wp9JrbweE8/giphy.gif)
 
   
@@ -47,6 +50,7 @@ To create a Particle System, it is necessary to set a series of attributes that 
 #### Color:
  - Each particle has to have a color. For greater realism, it is better to have a variety of shades of the same color.
  - Example:
+ 
  ![](https://media.giphy.com/media/9iZPq8W1drGVO/giphy.gif)
 
   
