@@ -11,11 +11,12 @@
 enum Wind { W_NON = 0, W_UP, W_DOWN, W_LEFT, W_RIGHT };
 enum P_Direction { P_NON, P_UP, P_DOWN, P_LEFT, P_RIGHT, P_RANDOM_X, P_RANDOM_Y, P_RANDOM, P_RANDOM_FIREWORK };
 
-
 class P_Follow;
 class P_Fire;
 class P_Explosion;
 class P_Firework;
+
+enum Explosion_Type;
 
 class ParticleManager : public j1Module
 {
@@ -64,7 +65,7 @@ public:
 
 
 public:
-	//std::list<ParticleGroup*> Group;
+
 	std::list<P_Follow*> Group_Follow;
 	std::list<P_Fire*> Group_Fire;
 	std::list<P_Explosion*> Group_Explosion;

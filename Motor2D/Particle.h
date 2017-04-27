@@ -22,24 +22,26 @@ public:
 	//render particle
 	void render(SDL_Texture* texture);
 
-	//Move particles
+	//Move particle
 	void Move(fPoint speed, Wind dir = W_NON, bool Move_alternative = false);
+
 	//GetPosition
 	fPoint GetPosition();
-
+	//GetSpeed
 	fPoint GetSpeed();
+	//Set Gravity (Simulation)
 	void SetSpeedGreavity(fPoint speed);
 
+	//Only Firework --------------------
 	void SetRepeat(bool);
 	bool GetRepeat();
 
-private: //private??
-		 //Offsets
+private:
+	//position
 	fPoint position;
 
 	//Texture
 	SDL_Rect rect;
-	SDL_Rect area_respawn;
 
 	//velocity
 	fPoint speed;
@@ -48,7 +50,7 @@ private: //private??
 
 	bool not_repeat; //ONLY FIREWORK
 
-	//int
+	//Time Life
 	iPoint degrade;
 };
 

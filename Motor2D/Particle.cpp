@@ -13,9 +13,6 @@ Particle::Particle(fPoint respawn, iPoint area, iPoint timelife, fPoint speed_pa
 	else
 		position.y = respawn.y - (rand() % area.y) + (rand() % area.y);
 
-	//set area_reapwn
-	area_respawn = { (int)respawn.x - area.x, (int)respawn.y - area.y, (int)respawn.x + area.x, (int)respawn.y + area.y };
-
 	//TimeLife of Particle
 	if (active)
 		degrade.y = MAX_TIMELIFE;
