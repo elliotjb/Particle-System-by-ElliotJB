@@ -90,19 +90,18 @@ To create a Particle System, it is necessary to set a series of attributes that 
 
  
   - Example **With Transparency**:
- 
+  
  ![](https://media.giphy.com/media/BubacVhtlbr20/giphy.gif) 
 
- 
+
+## Age Of Empires 2
+- Example:
+
+ ![](https://media.giphy.com/media/HJVsC0wynlEo8/giphy.gif) 
+
  
 ## Code
-
-
-
-
-
-
-
+Now let's do a little exercise to see how it works my Particle System.
 
 
 ## TODOS
