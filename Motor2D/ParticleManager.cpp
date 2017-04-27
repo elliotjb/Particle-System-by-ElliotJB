@@ -51,7 +51,7 @@ bool ParticleManager::Update(float dt)
 		Group_Fire.push_back(new P_Fire(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,2,2,0 }, iPoint(5, 2), iPoint(12, 4), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
 	}
 	//FIREWORK
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		Group_Firework.push_back(new P_Firework(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,8,2,0 }, iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
 	}
@@ -70,6 +70,8 @@ bool ParticleManager::Update(float dt)
 		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,4,2,0 }, RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(200, -60), P_RANDOM_X, 21));
 	}
 
+	//Iterate all list
+	//Group FOLLOW -------------------------------------------------
 	std::list<P_Follow*>::iterator item = Group_Follow.begin();
 	while (item != Group_Follow.end())
 	{
@@ -77,12 +79,15 @@ bool ParticleManager::Update(float dt)
 		item++;
 	}
 
+	//Group FIRE -------------------------------------------------
 	std::list<P_Fire*>::iterator item_2 = Group_Fire.begin();
 	while (item_2 != Group_Fire.end())
 	{
 		item_2._Ptr->_Myval->Update(dt);
 		item_2++;
 	}
+
+	//Group EXPLOSION -------------------------------------------------
 	std::list<P_Explosion*>::iterator item_3 = Group_Explosion.begin();
 	while (item_3 != Group_Explosion.end())
 	{
@@ -98,6 +103,7 @@ bool ParticleManager::Update(float dt)
 		item_3++;
 	}
 
+	//Group FIREWORK -------------------------------------------------
 	std::list<P_Firework*>::iterator item_4 = Group_Firework.begin();
 	while (item_4 != Group_Firework.end())
 	{
