@@ -26,7 +26,7 @@ A Particle system in a graphic engine, Unity:
 ## Atributes of Particle
 To create a Particle System, it is necessary to set a series of attributes that will have each particle:
 
-#### Position:
+### Position:
  - It is the position from where you are respawn, you can play with this value and establish an area from the center of the point and make it exit from a random place.
  - Example:
  
@@ -34,7 +34,7 @@ To create a Particle System, it is necessary to set a series of attributes that 
  
  
  
-#### Speed:
+### Speed:
  - The speed at which it will come out, here you can apply a force, for example: gravity or wind. This can increase realism.
  - Example Speed:
  
@@ -47,24 +47,26 @@ To create a Particle System, it is necessary to set a series of attributes that 
 
   
   
-#### Color:
+### Color:
  - Each particle has to have a color. For greater realism, it is better to have a variety of shades of the same color.
  - Example:
  
  ![](https://media.giphy.com/media/9iZPq8W1drGVO/giphy.gif)
 
   
-#### Life Time:
+### Life Time:
  - It is the life time of the particle. If you play with time so that each particle has a different one, you can get more relist effects.
  - Example:
  
+ ![](https://media.giphy.com/media/3cNZJEBYJEHx6/giphy.gif)
+
  
-#### Age:
+### Age:
  - To understand it better, if you have a particle that has 4 phases, childhood, young, adult and old. Each phase has a different color, with this you can play and tell you that some particles start in childhood and others in the following phases, so you get a greater realism.
  - I haven't used this attribute.
  
  
-#### Shape:
+### Shape:
  - In my case I use squares but in other cases they can be lines, mini-balls, etc.
  - Example:
 
@@ -82,7 +84,15 @@ To create a Particle System, it is necessary to set a series of attributes that 
 
 #### Transparency:
  - Transparency is important to bring realism to the particles. If you do not use it the player sees something strange.
- - Example:
+ - Example **Without Transparency**:
+ 
+ ![](https://media.giphy.com/media/c7Y12WoD7g7Ze/giphy.gif) 
+
+ 
+  - Example **With Transparency**:
+ 
+ ![](https://media.giphy.com/media/BubacVhtlbr20/giphy.gif) 
+
  
  
 ## Code
