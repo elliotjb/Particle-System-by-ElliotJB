@@ -245,9 +245,6 @@
     <Filter Include="Game\Animation\XML">
       <UniqueIdentifier>{6a882597-537e-47fe-8328-a787353c0983}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\CombatManager">
-      <UniqueIdentifier>{ad8fd33a-cb57-4e5d-9d14-b7c594f00af9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Modules">
       <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
     </Filter>

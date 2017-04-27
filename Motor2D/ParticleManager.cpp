@@ -33,6 +33,8 @@ bool ParticleManager::Start()
 	//TODO 8: ----------------------------------------------------------------------------------
 	//Uncomment
 	Group_Follow.push_back(new P_Follow(nullptr, App->input->GetMousePosition_p(), SDL_Rect{ 0,2,2,0 }, iPoint(0, 0), iPoint(15, 5), 4, 20, true, true));
+
+	Group_Fire.push_back(new P_Fire(nullptr, App->input->GetMousePosition_p(), iPoint(0,0), SDL_Rect{ 0,2,2,0 }, iPoint(5, 2), iPoint(12, 4), fPoint(60, -60), P_RANDOM, 65, 4, true, W_NON));
 	// ---------------------------------------------------------------------------------------
 
 	return true;
