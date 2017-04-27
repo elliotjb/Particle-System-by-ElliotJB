@@ -10,7 +10,7 @@ class Particle;
 class P_Fire
 {
 public:
-	P_Fire(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, bool active_ = false, Wind dir = W_NON );
+	P_Fire(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect = { 0,0,8,2 }, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, bool active_ = false, Wind dir = W_NON);
 	~P_Fire();
 
 	// Called each loop iteration
@@ -26,7 +26,6 @@ public:
 	void MoveParticles();
 
 public:
-	SDL_Texture* texture;
 	std::vector<Particle*> particle;
 	SceneElement* element_to_follow;
 	//Num of particles

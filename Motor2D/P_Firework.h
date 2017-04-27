@@ -12,8 +12,7 @@ class Particle;
 class P_Firework
 {
 public:
-	//	P_Follow(iPoint* element, iPoint area, iPoint timelife, SDL_Texture* texture, int size_particle, int num_textures, int num_particles = 20, bool active_ = false);
-	P_Firework(SceneElement* element, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
+	P_Firework(SceneElement* element, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect = { 0,0,8,2 }, iPoint timelife = { 15,5 }, fPoint speed = { 0,0 }, P_Direction p_direction = P_NON, int num_particles = 20, int num_textures = 4, iPoint next_textures = { 0, 4 }, iPoint last_textures = { 0, 4 });
 	~P_Firework();
 
 	// Called each loop iteration
@@ -27,14 +26,13 @@ public:
 	void MoveParticles();
 
 public:
-	SDL_Texture* texture;
 	std::vector<Particle*> particle;
 	SceneElement* element_to_follow;
 	//Num of particles
 	int number_particles;
 	int number_multifirework;
 
-	//test
+	//iPoint object
 	iPoint* object_follow;
 
 	//timelife
@@ -49,6 +47,8 @@ public:
 	fPoint pos;
 	int size_rect;
 	int n_textures;
+
+	SDL_Rect i_rect;
 
 	//velocity
 	fPoint speed;

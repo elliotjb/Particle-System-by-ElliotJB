@@ -2,9 +2,8 @@
 #include "Particle.h"
 #include "j1Window.h"
 
-P_Fire::P_Fire(SceneElement* element, iPoint* object, iPoint position_static, SDL_Texture* texture_, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
+P_Fire::P_Fire(SceneElement* element, iPoint* object, iPoint position_static, SDL_Rect initial_rect, iPoint area_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, bool active_, Wind dir)
 {
-	texture = texture_;
 	if (element != nullptr)
 	{
 		pos.x = element->position.x;
@@ -43,10 +42,10 @@ P_Fire::P_Fire(SceneElement* element, iPoint* object, iPoint position_static, SD
 	godelete = false;
 	active = active_;
 	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
+	size_rect = initial_rect.w;
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, size_rect, n_textures, true);
+		Particle* temp = new Particle(pos, area, timelife, speed, p_direction, initial_rect, size_rect, n_textures, true);
 		particle.push_back(temp);
 	}
 }
@@ -100,7 +99,7 @@ void P_Fire::render(fPoint pos)
 	//Draw particles
 	for (int i = 0; i < number_particles; i++)
 	{
-		particle[i]->render(texture);
+		particle[i]->render();
 	}
 }
 

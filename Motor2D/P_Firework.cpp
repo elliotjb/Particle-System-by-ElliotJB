@@ -1,9 +1,8 @@
 #include "P_Firework.h"
 #include "Particle.h"
 
-P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_static, SDL_Texture* texture_, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
+P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_static, SDL_Rect initial_rect, iPoint timelife_, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textture_, iPoint last_textures_)
 {
-	texture = texture_;
 	if (element != nullptr)
 	{
 		pos.x = element->position.x;
@@ -27,7 +26,7 @@ P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_st
 	}
 
 	speed = speed_particle;
-
+	i_rect = initial_rect;
 	next_textures = next_textture_;
 	last_textures = last_textures_;
 	//
@@ -36,10 +35,10 @@ P_Firework::P_Firework(SceneElement* element, iPoint* object, iPoint position_st
 	number_multifirework = num_particles;
 	godelete = false;
 	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
+	size_rect = initial_rect.w;
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, n_textures, true);
+		Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, n_textures, true);
 		particle.push_back(temp);
 	}
 
@@ -87,7 +86,7 @@ void P_Firework::render(fPoint pos)
 			{
 				speed.x = 100;
 				speed.y = 100;
-				Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, size_rect, n_textures, true, W_NON, next_textures);
+				Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, i_rect, size_rect, n_textures, true, W_NON, next_textures);
 				particle.push_back(temp);
 			}
 			timelife.y -= 1;
@@ -104,7 +103,7 @@ void P_Firework::render(fPoint pos)
 				{
 					speed.x = 100;
 					speed.y = 100;
-					Particle* temp = new Particle(particle[i]->GetPosition(), iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, size_rect, n_textures, true, W_NON, last_textures);
+					Particle* temp = new Particle(particle[i]->GetPosition(), iPoint(0, 0), timelife, speed, P_RANDOM_FIREWORK, i_rect, size_rect, n_textures, true, W_NON, last_textures);
 					particle.push_back(temp);
 					number_multifirework++;
 				}
@@ -117,7 +116,7 @@ void P_Firework::render(fPoint pos)
 		//Draw particles
 		for (int i = 0; i < 1; i++)
 		{
-			particle[i]->render(texture);
+			particle[i]->render();
 		}
 	}
 	else if (particle.size() == number_particles)
@@ -125,7 +124,7 @@ void P_Firework::render(fPoint pos)
 		//Draw particles
 		for (int i = 0; i < number_particles; i++)
 		{
-			particle[i]->render(texture);
+			particle[i]->render();
 		}
 	}
 	else //	number_multifirework;
@@ -133,7 +132,7 @@ void P_Firework::render(fPoint pos)
 		//Draw particles
 		for (int i = 0; i < number_multifirework; i++)
 		{
-			particle[i]->render(texture);
+			particle[i]->render();
 		}
 	}
 

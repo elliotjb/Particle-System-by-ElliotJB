@@ -1,9 +1,8 @@
 #include "P_Explosion.h"
 #include "Particle.h"
 
-P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_static, SDL_Texture* texture_, Explosion_Type type, iPoint perimeter_object, iPoint timelife_particle, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures)
+P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_static, SDL_Rect initial_rect, Explosion_Type type, iPoint perimeter_object, iPoint timelife_particle, fPoint speed_particle, P_Direction p_direction, int num_particles, int num_textures)
 {
-	texture = texture_;
 	if (element != nullptr)
 	{
 		pos.x = element->position.x;
@@ -29,7 +28,7 @@ P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_
 	timelife = timelife_particle;
 	number_particles = num_particles;
 	godelete = false;
-	size_rect = App->tex->GetHeight(texture_);
+	size_rect = initial_rect.w;
 	n_textures = num_textures;
 
 	type_explosion = type;
@@ -56,7 +55,7 @@ P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_
 				{
 					for (int k = 0; k < num_particles / 4; k++)
 					{
-						Particle* temp = new Particle(pos, iPoint(3, 3), timelife, speed, p_direction, size_rect, num_textures, true);
+						Particle* temp = new Particle(pos, iPoint(3, 3), timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 						particle.push_back(temp);
 						num_test++;
 					}
@@ -93,14 +92,14 @@ P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_
 				{
 					speed.x = -60;
 					speed.y = 0;
-					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, num_textures, true);
+					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 					particle.push_back(temp);
 				}
 				else
 				{
 					speed.x = 60;
 					speed.y = 0;
-					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, num_textures, true);
+					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 					particle.push_back(temp);
 				}
 
@@ -119,14 +118,14 @@ P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_
 				{
 					speed.y = -60;
 					speed.x = 0;
-					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, num_textures, true);
+					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 					particle.push_back(temp);
 				}
 				else
 				{
 					speed.y = 60;
 					speed.x = 0;
-					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, size_rect, num_textures, true);
+					Particle* temp = new Particle(pos, iPoint(0, 0), timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 					particle.push_back(temp);
 				}
 				pos.y += space_y;
@@ -138,7 +137,7 @@ P_Explosion::P_Explosion(SceneElement* element, iPoint* object, iPoint position_
 		speed = speed_particle;
 		for (int i = 0; i < num_particles; i++)//
 		{
-			Particle* temp = new Particle(pos, perimeter_object, timelife, speed, p_direction, size_rect, num_textures, true);
+			Particle* temp = new Particle(pos, perimeter_object, timelife, speed, p_direction, initial_rect, size_rect, num_textures, true);
 			particle.push_back(temp);
 		}
 	}
@@ -180,7 +179,7 @@ void P_Explosion::render(fPoint pos)
 	//Draw particles
 	for (int i = 0; i < number_particles; i++)
 	{
-		particle[i]->render(texture);
+		particle[i]->render();
 	}
 }
 

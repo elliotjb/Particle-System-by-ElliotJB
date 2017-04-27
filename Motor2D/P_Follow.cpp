@@ -3,9 +3,8 @@
 #include "j1Player.h"
 #include "j1Window.h"
 
-P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Texture* texture_, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
+P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Rect initial_rect, iPoint area_, iPoint timelife_, int num_textures, int num_particles, bool active_)
 {
-	texture = texture_;
 	if (element_to_follow != nullptr)
 	{
 		pos.x = element->position.x;
@@ -31,10 +30,10 @@ P_Follow::P_Follow(SceneElement* element, iPoint* object, SDL_Texture* texture_,
 	active = active_;
 	timelife = timelife_;
 	n_textures = num_textures;
-	size_rect = App->tex->GetHeight(texture_);
+	size_rect = initial_rect.w;
 	for (int i = 0; i < num_particles; i++)//
 	{
-		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), P_NON, size_rect, num_textures, active_);
+		Particle* temp = new Particle(pos, area, timelife, fPoint(0,0), P_NON, initial_rect, size_rect, num_textures, active_);
 		particle.push_back(temp);
 	}
 }
@@ -82,7 +81,7 @@ void P_Follow::render(fPoint pos)
 	//Draw particles
 	for (int i = 0; i < number_particles; i++)
 	{
-		particle[i]->render(texture);
+		particle[i]->render();
 	}
 }
 

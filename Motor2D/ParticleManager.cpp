@@ -27,13 +27,10 @@ bool ParticleManager::Start()
 	test_age = App->tex->Load("Particles/test_age_1.png");
 
 	//texture
-	texture.push_back(App->tex->Load("Particles/pixel_grass_2.png")); //0
-	texture.push_back(App->tex->Load("Particles/pixel_fire_1.png")); //1
-	texture.push_back(App->tex->Load("Particles/pixel_firework_1.png")); //2
-	texture.push_back(App->tex->Load("Particles/pixel_star.png")); //3
-	texture.push_back(App->tex->Load("Particles/pixel_fire.png")); //4
+	atlas_particle = App->tex->Load("Particles/pixel_fire_1.png"); //1
 
-	Group_Follow.push_back(new P_Follow(App->scene->player, nullptr, texture[0]));
+
+	Group_Follow.push_back(new P_Follow(App->scene->player, nullptr));
 	//Group_Fire.push_back(new P_Fire(iPoint(327, 246), texture[1], iPoint(5,2), iPoint(15,5), fPoint(0, -60), P_NON, 65, 4, true));
 	//mouse
 	//Group_Fire.push_back(new P_Fire(&App->input->mouse_pos, texture[1], iPoint(20, 10), iPoint(10, 3), fPoint(60, -60), P_RANDOM, 5000, 4, true));
@@ -55,11 +52,11 @@ bool ParticleManager::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 	{
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, iPoint(250, 200), texture[1], CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, iPoint(250, 200), SDL_Rect{ 0,0,8,4 }, CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
 	}
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
-		Group_Firework.push_back(new P_Firework(nullptr, nullptr, App->input->GetMousePosition(), texture[2], iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
+		Group_Firework.push_back(new P_Firework(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, iPoint(0, 2), fPoint(0, -400), P_NON, 20, 1, iPoint(1,1), iPoint(1, 4)));
 	}
 
 
@@ -67,17 +64,17 @@ bool ParticleManager::Update(float dt)
 	{
 		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], CROSS, iPoint(20, 20), iPoint(10, 2), fPoint(60, 60), P_NON, 21));
 		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(12, 12), iPoint(20, 10), fPoint(100, -60), P_LEFT, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), texture[1], CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 10));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 10));
 	}
 	if (App->input->GetMouseButtonDown(2) == KEY_DOWN)
 	{
 		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(60, -60), P_RANDOM_X, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), texture[1], CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 20));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 20));
 	}
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
 	{
 		//Group_Explosion.push_back(new P_Explosion(App->input->GetMousePosition(), texture[1], RANDOM, iPoint(20, 20), iPoint(20, 8), fPoint(200, -60), P_RANDOM_X, 21));
-		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), texture[1], CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 30));
+		Group_Explosion.push_back(new P_Explosion(nullptr, nullptr, App->input->GetMousePosition(), SDL_Rect{ 0,0,8,4 }, CIRCLE, iPoint(0, 0), iPoint(5, 2), fPoint(60, -60), P_RANDOM, 30));
 	}
 
 	std::list<P_Follow*>::iterator item = Group_Follow.begin();
@@ -126,13 +123,13 @@ bool ParticleManager::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(305, 162), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(314, 174), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(374, 136), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(361, 226), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(266, 276), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(386, 319), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
-		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(468, 207), texture[4], iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(305, 162), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(314, 174), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(374, 136), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(361, 226), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(266, 276), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(386, 319), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
+		Group_Fire.push_back(new P_Fire(nullptr, nullptr, iPoint(468, 207), SDL_Rect{ 0,0,8,4 }, iPoint(10, 2), iPoint(20, 5), fPoint(0, -60), P_NON, 65, 4, true, W_NON));
 	}
 
 	
@@ -190,24 +187,24 @@ bool ParticleManager::CleanUp()
 
 //CREATE GROUPS -------------------------------------------------------------------------------------------------------------------------------------
 
-void ParticleManager::CreateFollow_P(SceneElement* element_to_follow, iPoint* object_follow, SDL_Texture* texture, iPoint area, iPoint timelife, int num_textures, int num_particles, bool active)
+void ParticleManager::CreateFollow_P(SceneElement* element_to_follow, iPoint* object_follow, SDL_Rect initial_rect, iPoint area, iPoint timelife, int num_textures, int num_particles, bool active)
 {
-	Group_Follow.push_back(new P_Follow(element_to_follow, object_follow, texture, area, timelife, num_textures, num_particles, active));
+	Group_Follow.push_back(new P_Follow(element_to_follow, object_follow, initial_rect, area, timelife, num_textures, num_particles, active));
 }
 
-void ParticleManager::CreateFire_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, iPoint area, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures, bool active, Wind w_dir)
+void ParticleManager::CreateFire_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect, iPoint area, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures, bool active, Wind w_dir)
 {
-	Group_Fire.push_back(new P_Fire(element_to_follow, object_follow, position_static, texture, area, timelife, speed, p_direction, num_particles, num_textures, active, w_dir));
+	Group_Fire.push_back(new P_Fire(element_to_follow, object_follow, position_static, initial_rect, area, timelife, speed, p_direction, num_particles, num_textures, active, w_dir));
 }
 
-void ParticleManager::CreateExplosion_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, Explosion_Type type, iPoint perimeter, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures)
+void ParticleManager::CreateExplosion_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect, Explosion_Type type, iPoint perimeter, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures)
 {
-	Group_Explosion.push_back(new P_Explosion(element_to_follow, object_follow, position_static, texture, type, perimeter, timelife, speed, p_direction, num_particles, num_textures));
+	Group_Explosion.push_back(new P_Explosion(element_to_follow, object_follow, position_static, initial_rect, type, perimeter, timelife, speed, p_direction, num_particles, num_textures));
 }
 
-void ParticleManager::CreateFirework_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Texture* texture, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textures, iPoint last_textures)
+void ParticleManager::CreateFirework_Particle(SceneElement* element_to_follow, iPoint* object_follow, iPoint position_static, SDL_Rect initial_rect, iPoint timelife, fPoint speed, P_Direction p_direction, int num_particles, int num_textures, iPoint next_textures, iPoint last_textures)
 {
-	Group_Firework.push_back(new P_Firework(element_to_follow, object_follow, position_static, texture, timelife, speed, p_direction, num_particles, num_textures, next_textures, last_textures));
+	Group_Firework.push_back(new P_Firework(element_to_follow, object_follow, position_static, initial_rect, timelife, speed, p_direction, num_particles, num_textures, next_textures, last_textures));
 }
 
 
