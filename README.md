@@ -113,7 +113,7 @@ If it is, we set the maximum life it can have (#define), and if it is not, we pu
 
 **When you finish run the program and try to put explosions and fireworks.**
 
- ![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif) 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
 
 ### TODO 2
 Create a Particle Vector, use std::vector
@@ -122,7 +122,7 @@ And finally a pointer to an iPoint (iPoint*)
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.h#L28>
 
- ![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif) 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
 
 ### TODO 3
 Check if entity (element) is different from nullptr
@@ -132,6 +132,8 @@ Otherwise, do it backwards. //element == nullptr and position = object
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L8>
 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
+
 ### TODO 4
 In this TODO we need open Particle.h and see the constructor
 Create a new Particle and pushback in vector.
@@ -139,7 +141,7 @@ TIPS: Speed = fPoint(0,0) // P_Direction = P_NON
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L37>
  
-  ![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif) 
+  ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
  
 ### TODO 5
 Here we have to Update the position.
@@ -147,13 +149,15 @@ Check if the entity is diferent nullptr and set position. On the contrary, use U
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L53>
 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
+ 
 ### TODO 6
 Iterate the filled vector, First Comprovated if the particle is Dead, and then use particle[i]->Modify();
 TIPS: Use number_particles!! // iPoint num_tex -> (0, n_textures)!
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L80>
 
- ![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif) 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif) 
 
 ### TODO 7
 Draw particles
@@ -161,7 +165,7 @@ Iterate the filled vector, Call the functioon render();
 
 - Solution -> <https://github.com/elliotjb/Particle-System-by-ElliotJB/blob/master/Motor2D/P_Follow.cpp#L93>
 
- ![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif) 
+ ![](https://s-media-cache-ak0.pinimg.com/originals/2b/cc/0e/2bcc0e11960ebe99ec2c4d402328a970.gif)  
 
 ### TODO 8 
 Uncomment
