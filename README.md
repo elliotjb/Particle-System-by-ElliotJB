@@ -2,7 +2,7 @@
 
 ## INTRODUCTION
 
-##Particle:
+## Particle:
 In the physical sciences, a particle is a small localized object to which can be ascribed several physical or chemical properties such as volume or mass.
 A particle can be a smoke, a spark, a drop of water, etc. Especially to give visual effects.
 
@@ -29,11 +29,14 @@ To create a Particle System, it is necessary to set a series of attributes that 
 #### Position:
  - It is the position from where you are respawn, you can play with this value and establish an area from the center of the point and make it exit from a random place.
  - Example:
+ ![]( https://media.giphy.com/media/fmTp0H3B7ElR6/giphy.gif)
+ 
  
  
 #### Speed:
  - The speed at which it will come out, here you can apply a force, for example: gravity or wind. This can increase realism.
  - Example:
+  
   
   
 #### Color:
@@ -64,6 +67,8 @@ To create a Particle System, it is necessary to set a series of attributes that 
  - Example:
 
  ![](https://media.giphy.com/media/BwZpj7IQdlH4Q/giphy.gif)
+
+
 
 #### Transparency:
  - Transparency is important to bring realism to the particles. If you do not use it the player sees something strange.
