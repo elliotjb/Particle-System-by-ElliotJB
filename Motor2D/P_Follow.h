@@ -10,7 +10,7 @@ class Particle;
 class P_Follow
 {
 public:
-	P_Follow(SceneElement* element_to_follow, iPoint* object_follow, SDL_Rect initial_rect = { 0,0,8,2 }, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int num_textures = 4, int num_particles = 20, bool active_ = false);
+	P_Follow(SceneElement* element_to_follow, iPoint* object_follow, SDL_Rect initial_rect = { 0,0,8,2 }, iPoint area = { 12, 2 }, iPoint timelife = { 15,5 }, int num_textures = 4, int num_particles = 20, bool active_ = false, bool isMouse = false);
 	~P_Follow();
 
 	// Called each loop iteration
@@ -20,19 +20,23 @@ public:
 	bool PostUpdate();
 
 	void render(fPoint pos);
-	void MoveParticles();
 
 	void Update_position(iPoint* pos);
 
 
 public:
+	//TODO 2: ---------------------------------------------------------------------
+	//Create a Particle Vector, use std::vector
+	//Also, create a pointer to an entity (SceneElement*)
+	//And finally a pointer to an iPoint (iPoint*)
 	std::vector<Particle*> particle;
 	SceneElement* element_to_follow;
+	iPoint* object_follow;
+	//-----------------------------------------------------------------------------
 	//Num of particles
 	int number_particles;
 
 	//iPoints
-	iPoint* object_follow;
 	iPoint area;
 	iPoint timelife;
 
@@ -44,6 +48,7 @@ public:
 	//velocity
 	//fPoint speed;
 	bool active;
+	bool isMouse;
 
 	bool godelete;
 
