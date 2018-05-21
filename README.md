@@ -32,6 +32,7 @@ To create a Particle System, it is necessary to set a series of attributes that 
  
  ![](https://media.giphy.com/media/fmTp0H3B7ElR6/giphy.gif)
  
+ *Image taken with my particle system.*
  
  
 ### Speed:
@@ -39,11 +40,15 @@ To create a Particle System, it is necessary to set a series of attributes that 
  - Example Speed:
  
   ![](https://media.giphy.com/media/muKgnCvN7srmg/giphy.gif)
+  
+  *Image taken with my particle system.*
 
 
  - Example Gravity:
  
   ![](https://media.giphy.com/media/eb9wp9JrbweE8/giphy.gif)
+  
+  *Image taken with my particle system.*
 
   
   
@@ -52,6 +57,8 @@ To create a Particle System, it is necessary to set a series of attributes that 
  - Example:
  
  ![](https://media.giphy.com/media/9iZPq8W1drGVO/giphy.gif)
+ 
+ *Image taken with my particle system.*
 
   
 ### Life Time:
@@ -59,6 +66,8 @@ To create a Particle System, it is necessary to set a series of attributes that 
  - Example:
  
  ![](https://media.giphy.com/media/3cNZJEBYJEHx6/giphy.gif)
+ 
+ *Image taken with my particle system.*
 
  
 ### Age:
@@ -87,11 +96,15 @@ To create a Particle System, it is necessary to set a series of attributes that 
  - Example **Without Transparency**:
  
  ![](https://media.giphy.com/media/c7Y12WoD7g7Ze/giphy.gif) 
+ 
+ *Image taken with my particle system.*
 
  
   - Example **With Transparency**:
   
  ![](https://media.giphy.com/media/BubacVhtlbr20/giphy.gif) 
+ 
+ *Image taken with my particle system.*
 
 
 ## Age Of Empires 2
